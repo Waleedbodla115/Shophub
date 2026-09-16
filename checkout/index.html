@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="ShopHub Checkout"
+    >
+
+    <title>ShopHub - Checkout</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Checkout CSS -->
+    <link rel="stylesheet" href="./checkout.css">
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER / NAVBAR
+    ====================================================== -->
+
+    <header class="site-header">
+
+        <div class="container navbar">
+
+
+            <!-- Logo -->
+
+            <a href="../index.html" class="logo">
+
+                <span class="logo-icon">
+                    <i class="fas fa-bag-shopping"></i>
+                </span>
+
+                <span class="logo-text">
+                    ShopHub
+                </span>
+
+            </a>
+
+
+            <!-- Navigation -->
+
+            <nav class="main-nav">
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+                <a href="../shop/index.html">
+                    Shop
+                </a>
+
+                <a href="../men/index.html">
+                    Men
+                </a>
+
+                <a href="../women/index.html">
+                    Women
+                </a>
+
+                <a href="../kids/index.html">
+                    Kids
+                </a>
+
+                <a href="../accessories/index.html">
+                    Accessories
+                </a>
+
+                <a href="../electronics/index.html">
+                    Electronics
+                </a>
+
+            </nav>
+
+
+            <!-- Header Actions -->
+
+            <div class="header-actions">
+
+
+                <!-- Wishlist -->
+
+                <a
+                    href="../wishlist/index.html"
+                    class="header-action"
+                    aria-label="Wishlist"
+                >
+
+                    <i class="far fa-heart"></i>
+
+                    <span class="wishlist-count">
+                        0
+                    </span>
+
+                </a>
+
+
+                <!-- Cart -->
+
+                <a
+                    href="../cart/index.html"
+                    class="header-action cart-action"
+                    aria-label="Shopping Cart"
+                >
+
+                    <i class="fas fa-cart-shopping"></i>
+
+                    <span class="cart-count icon-badge">
+                        0
+                    </span>
+
+                </a>
+
+
+                <!-- Theme -->
+
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Toggle dark mode"
+                >
+
+                    <i class="fas fa-moon"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MOBILE NAVIGATION
+    ====================================================== -->
+
+    <div
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="../index.html">
+
+            <i class="fas fa-house"></i>
+
+            <span>
+                Home
+            </span>
+
+        </a>
+
+
+        <a href="../shop/index.html">
+
+            <i class="fas fa-store"></i>
+
+            <span>
+                Shop
+            </span>
+
+        </a>
+
+
+        <a href="../wishlist/index.html">
+
+            <i class="far fa-heart"></i>
+
+            <span>
+                Wishlist
+            </span>
+
+        </a>
+
+
+        <a href="../cart/index.html">
+
+            <i class="fas fa-cart-shopping"></i>
+
+            <span>
+                Cart
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN CHECKOUT
+    ====================================================== -->
+
+    <main class="checkout-page">
+
+
+        <!-- =================================================
+             BREADCRUMB
+        ================================================== -->
+
+        <section class="breadcrumb-section">
+
+            <div class="container">
+
+                <div class="breadcrumb">
+
+                    <a href="../index.html">
+                        Home
+                    </a>
+
+                    <i class="fas fa-chevron-right"></i>
+
+                    <a href="../cart/index.html">
+                        Shopping Cart
+                    </a>
+
+                    <i class="fas fa-chevron-right"></i>
+
+                    <span>
+                        Checkout
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PAYMENT CANCELLED BANNER (shown via checkout.js when
+             Stripe redirects back with ?payment_cancelled=1)
+        ================================================== -->
+
+        <section class="container">
+            <div id="paymentCancelledBanner" class="payment-cancelled-banner" style="display:none;" role="alert">
+                <i class="fas fa-circle-exclamation"></i>
+                <span>
+                    Your payment was cancelled. Your order was saved as
+                    <strong>Pending</strong> — you can retry payment from
+                    <a href="../orders/index.html">My Orders</a>, or place a
+                    new order below.
+                </span>
+                <button type="button" id="dismissPaymentCancelledBanner" aria-label="Dismiss">
+                    <i class="fas fa-xmark"></i>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- =================================================
+             CHECKOUT HEADING
+        ================================================== -->
+
+        <section class="checkout-heading-section">
+
+            <div class="container">
+
+                <div class="checkout-heading">
+
+                    <span class="section-label">
+                        SECURE CHECKOUT
+                    </span>
+
+                    <h1>
+                        Checkout
+                    </h1>
+
+                    <p>
+                        Complete your information to place your order.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CHECKOUT CONTENT
+        ================================================== -->
+
+        <section class="checkout-content-section">
+
+            <div class="container">
+
+                <div class="checkout-layout">
+
+
+                    <!-- =====================================
+                         LEFT SIDE
+                    ====================================== -->
+
+                    <div class="checkout-form-wrapper">
+
+
+                        <!-- =================================
+                             CUSTOMER INFORMATION
+                        ================================== -->
+
+                        <section class="checkout-card">
+
+                            <div class="checkout-card-header">
+
+                                <div class="checkout-card-icon">
+
+                                    <i class="fas fa-user"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h2>
+                                        Customer Information
+                                    </h2>
+
+                                    <p>
+                                        Enter your contact details.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="checkout-card-body">
+
+                                <div class="form-grid">
+
+
+                                    <!-- Full Name -->
+
+                                    <div class="form-group full-width">
+
+                                        <label for="fullName">
+                                            Full Name
+                                            <span>*</span>
+                                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <i class="fas fa-user"></i>
+
+                                            <input
+                                                type="text"
+                                                id="fullName"
+                                                name="fullName"
+                                                placeholder="Enter your full name"
+                                                autocomplete="name"
+                                                required
+                                            >
+
+                                        </div>
+
+                                        <small
+                                            class="form-error"
+                                            id="fullNameError"
+                                        ></small>
+
+                                    </div>
+
+
+                                    <!-- Email -->
+
+                                    <div class="form-group">
+
+                                        <label for="email">
+                                            Email Address
+                                            <span>*</span>
+                                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <i class="fas fa-envelope"></i>
+
+                                            <input
+                                                type="email"
+                                                id="email"
+                                                name="email"
+                                                placeholder="you@example.com"
+                                                autocomplete="email"
+                                                required
+                                            >
+
+                                        </div>
+
+                                        <small
+                                            class="form-error"
+                                            id="emailError"
+                                        ></small>
+
+                                    </div>
+
+
+                                    <!-- Phone -->
+
+                                    <div class="form-group">
+
+                                        <label for="phone">
+                                            Phone Number
+                                            <span>*</span>
+                                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <i class="fas fa-phone"></i>
+
+                                            <input
+                                                type="tel"
+                                                id="phone"
+                                                name="phone"
+                                                placeholder="Enter phone number"
+                                                autocomplete="tel"
+                                                required
+                                            >
+
+                                        </div>
+
+                                        <small
+                                            class="form-error"
+                                            id="phoneError"
+                                        ></small>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- =================================
+                             SHIPPING INFORMATION
+                        ================================== -->
+
+                        <section class="checkout-card">
+
+                            <div class="checkout-card-header">
+
+                                <div class="checkout-card-icon">
+
+                                    <i class="fas fa-location-dot"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h2>
+                                        Shipping Information
+                                    </h2>
+
+                                    <p>
+                                        Where should we deliver your order?
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="checkout-card-body">
+
+                                <div class="form-grid">
+
+
+                                    <!-- Address -->
+
+                                    <div class="form-group full-width">
+
+                                        <label for="address">
+                                            Street Address
+                                            <span>*</span>
+                                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <i class="fas fa-house"></i>
+
+                                            <input
+                                                type="text"
+                                                id="address"
+                                                name="address"
+                                                placeholder="House number, street, area"
+                                                autocomplete="street-address"
+                                                required
+                                            >
+
+                                        </div>
+
+                                        <small
+                                            class="form-error"
+                                            id="addressError"
+                                        ></small>
+
+                                    </div>
+
+
+                                    <!-- City -->
+
+                                    <div class="form-group">
+
+                                        <label for="city">
+                                            City
+                                            <span>*</span>
+                                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <i class="fas fa-city"></i>
+
+                                            <input
+                                                type="text"
+                                                id="city"
+                                                name="city"
+                                                placeholder="Enter city"
+                                                autocomplete="address-level2"
+                                                required
+                                            >
+
+                                        </div>
+
+                                        <small
+                                            class="form-error"
+                                            id="cityError"
+                                        ></small>
+
+                                    </div>
+
+
+                                    <!-- Postal Code -->
+
+                                    <div class="form-group">
+
+                                        <label for="postalCode">
+                                            Postal Code
+                                        </label>
+
+                                        <div class="input-wrapper">
+
+                                            <i class="fas fa-envelopes-bulk"></i>
+
+                                            <input
+                                                type="text"
+                                                id="postalCode"
+                                                name="postalCode"
+                                                placeholder="Postal code"
+                                                autocomplete="postal-code"
+                                            >
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- =================================
+                             PAYMENT METHOD
+                        ================================== -->
+
+                        <section class="checkout-card">
+
+                            <div class="checkout-card-header">
+
+                                <div class="checkout-card-icon">
+
+                                    <i class="fas fa-credit-card"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h2>
+                                        Payment Method
+                                    </h2>
+
+                                    <p>
+                                        Select your preferred payment method.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="checkout-card-body">
+
+
+                                <div class="payment-options">
+
+
+                                    <!-- Cash on Delivery -->
+
+                                    <label
+                                        class="payment-option active"
+                                        for="cashOnDelivery"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            id="cashOnDelivery"
+                                            name="paymentMethod"
+                                            value="cash_on_delivery"
+                                            checked
+                                        >
+
+                                        <span class="payment-radio"></span>
+
+
+                                        <span class="payment-icon">
+
+                                            <i class="fas fa-money-bill-wave"></i>
+
+                                        </span>
+
+
+                                        <span class="payment-content">
+
+                                            <strong>
+                                                Cash on Delivery
+                                            </strong>
+
+                                            <small>
+                                                Pay when your order arrives.
+                                            </small>
+
+                                        </span>
+
+
+                                        <i class="fas fa-check payment-check"></i>
+
+                                    </label>
+
+
+                                    <!-- Online Payment -->
+
+                                    <label
+                                        class="payment-option"
+                                        for="onlinePayment"
+                                    >
+
+                                        <input
+                                            type="radio"
+                                            id="onlinePayment"
+                                            name="paymentMethod"
+                                            value="online"
+                                        >
+
+                                        <span class="payment-radio"></span>
+
+
+                                        <span class="payment-icon">
+
+                                            <i class="fas fa-credit-card"></i>
+
+                                        </span>
+
+
+                                        <span class="payment-content">
+
+                                            <strong>
+                                                Online Payment
+                                            </strong>
+
+                                            <small>
+                                                Secure checkout powered by Stripe when configured.
+                                            </small>
+
+                                        </span>
+
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- =================================
+                             ORDER NOTES
+                        ================================== -->
+
+                        <section class="checkout-card">
+
+                            <div class="checkout-card-header">
+
+                                <div class="checkout-card-icon">
+
+                                    <i class="fas fa-message"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h2>
+                                        Order Notes
+                                    </h2>
+
+                                    <p>
+                                        Optional instructions for your order.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="checkout-card-body">
+
+                                <div class="form-group">
+
+                                    <label for="orderNotes">
+                                        Additional Notes
+                                    </label>
+
+                                    <textarea
+                                        id="orderNotes"
+                                        name="orderNotes"
+                                        rows="4"
+                                        placeholder="Add delivery instructions or any special request..."
+                                    ></textarea>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                    </div>
+
+
+                    <!-- =====================================
+                         RIGHT SIDE - ORDER SUMMARY
+                    ====================================== -->
+
+                    <aside class="checkout-summary">
+
+
+                        <div class="checkout-summary-header">
+
+                            <div>
+
+                                <span class="section-label">
+                                    YOUR ORDER
+                                </span>
+
+                                <h2>
+                                    Order Summary
+                                </h2>
+
+                            </div>
+
+                            <span
+                                class="checkout-items-count"
+                                id="checkoutItemsCount"
+                            >
+                                0 Items
+                            </span>
+
+                        </div>
+
+
+                        <!-- Cart Products -->
+
+                        <div
+                            class="checkout-products"
+                            id="checkoutProducts"
+                        >
+                            <!-- checkout.js will render products -->
+                        </div>
+
+
+                        <!-- Summary -->
+
+                        <div class="checkout-summary-body">
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Subtotal
+                                </span>
+
+                                <strong id="checkoutSubtotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-row">
+
+                                <span>
+                                    Shipping
+                                </span>
+
+                                <strong id="checkoutShipping">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+
+                            <div
+                                class="summary-row discount-row"
+                                id="checkoutDiscountRow"
+                                hidden
+                            >
+
+                                <span>
+                                    Discount
+                                </span>
+
+                                <strong id="checkoutDiscount">
+                                    -$0.00
+                                </strong>
+
+                            </div>
+
+
+                            <div class="summary-divider"></div>
+
+
+                            <div class="summary-total">
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <strong id="checkoutTotal">
+                                    $0.00
+                                </strong>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- Place Order -->
+
+                        <div class="place-order-wrapper">
+
+                            <button
+                                type="submit"
+                                class="btn btn-place-order"
+                                id="placeOrderBtn"
+                                form="checkoutForm"
+                            >
+
+                                <span>
+                                    Place Order
+                                </span>
+
+                                <i class="fas fa-arrow-right"></i>
+
+                            </button>
+
+
+                            <div class="secure-checkout">
+
+                                <i class="fas fa-lock"></i>
+
+                                <span>
+                                    Your information is secure
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CHECKOUT BENEFITS
+        ================================================== -->
+
+        <section class="checkout-benefits">
+
+            <div class="container">
+
+                <div class="benefits-grid">
+
+
+                    <!-- Benefit 1 -->
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+
+                            <i class="fas fa-truck-fast"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Fast Delivery
+                            </h3>
+
+                            <p>
+                                Quick and reliable delivery.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Benefit 2 -->
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+
+                            <i class="fas fa-shield-halved"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Secure Checkout
+                            </h3>
+
+                            <p>
+                                Your information is protected.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Benefit 3 -->
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+
+                            <i class="fas fa-rotate-left"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Easy Returns
+                            </h3>
+
+                            <p>
+                                Simple and hassle-free returns.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Benefit 4 -->
+
+                    <div class="benefit-item">
+
+                        <div class="benefit-icon">
+
+                            <i class="fas fa-headset"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Customer Support
+                            </h3>
+
+                            <p>
+                                We're here when you need us.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container footer-content">
+
+
+            <!-- Brand -->
+
+            <div class="footer-brand">
+
+                <a href="../index.html" class="logo">
+
+                    <span class="logo-icon">
+                        <i class="fas fa-bag-shopping"></i>
+                    </span>
+
+                    <span class="logo-text">
+                        ShopHub
+                    </span>
+
+                </a>
+
+                <p>
+                    Discover quality products for every
+                    style, need, and lifestyle.
+                </p>
+
+            </div>
+
+
+            <!-- Quick Links -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+                <a href="../shop/index.html">
+                    Shop
+                </a>
+
+                <a href="../wishlist/index.html">
+                    Wishlist
+                </a>
+
+                <a href="../cart/index.html">
+                    Cart
+                </a>
+
+            </div>
+
+
+            <!-- Customer Service -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Customer Service
+                </h3>
+
+                <a href="#">
+                    Contact Us
+                </a>
+
+                <a href="#">
+                    Shipping Information
+                </a>
+
+                <a href="#">
+                    Returns & Refunds
+                </a>
+
+                <a href="#">
+                    FAQ
+                </a>
+
+            </div>
+
+
+            <!-- Social -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Follow Us
+                </h3>
+
+                <div class="social-links">
+
+                    <a
+                        href="#"
+                        aria-label="Facebook"
+                    >
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        aria-label="Instagram"
+                    >
+                        <i class="fab fa-instagram"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        aria-label="Twitter"
+                    >
+                        <i class="fab fa-twitter"></i>
+                    </a>
+
+                    <a
+                        href="#"
+                        aria-label="YouTube"
+                    >
+                        <i class="fab fa-youtube"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Footer Bottom -->
+
+        <div class="footer-bottom">
+
+            <div class="container">
+
+                <p>
+                    © 2026 ShopHub. All rights reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         CHECKOUT FORM
+         
+         Hidden form container used by checkout.js.
+         The form wraps the checkout fields through JS.
+    ====================================================== -->
+
+    <form
+        id="checkoutForm"
+        novalidate
+    ></form>
+
+
+    <!-- =====================================================
+         CHECKOUT JAVASCRIPT
+    ====================================================== -->
+
+    <!-- Shared Products Data -->
+    <script src="../products/products.js"></script>
+
+    <!-- Checkout JavaScript -->
+    <script src="./checkout.js"></script>
+
+
+    <script src="../chatbot/chatbot.js"></script>
+</body>
+
+</html>

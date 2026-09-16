@@ -1,0 +1,35 @@
+/* =========================================================
+   PRODUCTS PAGE STYLES
+   products.css
+
+   Basic starter styles — extend as needed.
+========================================================= */
+
+.products-section {
+    min-height: 50vh;
+}
+
+.products-section h1 {
+    font-weight: 700;
+}
+
+#productsGrid .card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#productsGrid .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+#productsGrid .card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
+#productsGrid .add-to-cart-btn {
+    width: 100%;
+}

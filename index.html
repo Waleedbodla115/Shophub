@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="ShopHub - Your modern online shopping destination for fashion, accessories, kids products and electronics."
+    >
+
+    <title>ShopHub - Home</title>
+
+
+    <!-- =====================================================
+         BOOTSTRAP
+    ====================================================== -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         FONT AWESOME
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- =====================================================
+         GOOGLE FONT
+    ====================================================== -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         ROOT CSS
+    ====================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SHOPHUB NAVBAR
+    ====================================================== -->
+
+    <header
+        class="main-header"
+        id="mainHeader"
+    >
+
+        <div class="container">
+
+            <nav class="navbar navbar-expand-lg">
+
+
+                <!-- =================================================
+                     LOGO
+                ================================================== -->
+
+                <a
+                    href="index.html"
+                    class="navbar-brand logo"
+                >
+
+                    <span class="logo-icon">
+                        <i class="fas fa-bag-shopping"></i>
+                    </span>
+
+                    Shop<span>Hub</span>
+
+                </a>
+
+
+                <!-- =================================================
+                     MOBILE MENU
+                ================================================== -->
+
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+
+                <!-- =================================================
+                     NAVIGATION
+                ================================================== -->
+
+                <div
+                    class="collapse navbar-collapse"
+                    id="mainNavbar"
+                >
+
+                    <ul class="navbar-nav mx-auto main-nav">
+
+
+                        <!-- HOME -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link active"
+                                href="index.html"
+                            >
+                                Home
+                            </a>
+
+                        </li>
+
+
+                        <!-- SHOP → ALL PRODUCTS -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="shop/index.html"
+                            >
+                                Shop
+                            </a>
+
+                        </li>
+
+
+                        <!-- CATEGORIES → CATEGORY PAGE -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="category/index.html"
+                            >
+                                Categories
+                            </a>
+
+                        </li>
+
+
+                        <!-- ABOUT -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="#about"
+                            >
+                                About
+                            </a>
+
+                        </li>
+
+
+                        <!-- CONTACT -->
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="#contact"
+                            >
+                                Contact
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+
+                    <!-- =================================================
+                         HEADER ACTIONS
+                    ================================================== -->
+
+                    <div class="header-actions">
+
+
+                        <!-- SEARCH -->
+
+                        <button
+                            type="button"
+                            class="header-icon"
+                            id="searchToggle"
+                            aria-label="Search"
+                            title="Search"
+                        >
+
+                            <i class="fas fa-search"></i>
+
+                        </button>
+
+
+                        <!-- WISHLIST -->
+
+                        <a
+                            href="wishlist/index.html"
+                            class="header-icon icon-badge-wrapper"
+                            aria-label="Wishlist"
+                            title="Wishlist"
+                        >
+
+                            <i class="far fa-heart"></i>
+
+                            <span
+                                id="wishlistCount"
+                                class="icon-badge"
+                            >
+                                0
+                            </span>
+
+                        </a>
+
+
+                        <!-- CART -->
+
+                        <a
+                            href="cart/index.html"
+                            class="header-icon icon-badge-wrapper"
+                            aria-label="Shopping Cart"
+                            title="Shopping Cart"
+                        >
+
+                            <i class="fas fa-shopping-bag"></i>
+
+                            <span
+                                id="cartCount"
+                                class="icon-badge cart-count"
+                            >
+                                0
+                            </span>
+
+                        </a>
+
+
+                        <!-- ACCOUNT -->
+
+                        <a
+                            href="login/index.html"
+                            class="header-icon"
+                            aria-label="My Account"
+                            title="My Account"
+                        >
+
+                            <i class="far fa-user"></i>
+
+                        </a>
+
+
+                        <!-- DARK MODE -->
+
+                        <button
+                            type="button"
+                            id="themeToggle"
+                            class="header-icon theme-toggle"
+                            aria-label="Toggle dark mode"
+                            title="Toggle dark mode"
+                        >
+
+                            <i class="fas fa-moon"></i>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+
+            <!-- =====================================================
+                 SEARCH BAR
+            ====================================================== -->
+
+            <div
+                class="header-search"
+                id="headerSearch"
+            >
+
+                <div class="search-box">
+
+                    <i class="fas fa-search"></i>
+
+                    <input
+                        type="text"
+                        id="globalSearch"
+                        placeholder="Search products, categories..."
+                        autocomplete="off"
+                    >
+
+                    <button
+                        type="button"
+                        id="searchClose"
+                        aria-label="Close search"
+                    >
+
+                        <i class="fas fa-xmark"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main>
+
+
+        <!-- =====================================================
+             HOME HERO
+        ====================================================== -->
+
+        <section
+            class="hero-section"
+            id="home"
+        >
+
+            <div class="container">
+
+                <div class="row align-items-center g-5">
+
+
+                    <!-- HERO CONTENT -->
+
+                    <div class="col-lg-6">
+
+                        <div class="hero-content">
+
+                            <span class="hero-badge">
+
+                                <i class="fas fa-sparkles"></i>
+
+                                Welcome to ShopHub
+
+                            </span>
+
+
+                            <h1 class="hero-title">
+
+                                Everything You Need.
+
+                                <span>
+                                    All In One Place.
+                                </span>
+
+                            </h1>
+
+
+                            <p class="hero-text">
+
+                                Discover fashion, accessories,
+                                kids collections and electronics
+                                with ShopHub.
+
+                            </p>
+
+
+                            <div class="hero-buttons">
+
+
+                                <!-- GO TO ALL PRODUCTS -->
+
+                                <a
+                                    href="shop/index.html"
+                                    class="btn btn-primary-custom"
+                                >
+
+                                    <i class="fas fa-bag-shopping"></i>
+
+                                    Start Shopping
+
+                                </a>
+
+
+                                <!-- GO TO CATEGORY SECTION -->
+
+                                <a
+                                    href="#categories"
+                                    class="btn btn-outline-custom"
+                                >
+
+                                    Explore Categories
+
+                                    <i class="fas fa-arrow-down"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- HERO IMAGE -->
+
+                    <div class="col-lg-6">
+
+                        <div class="hero-image-wrapper">
+
+                            <img
+                                src="assets/images/hero.png"
+                                alt="ShopHub Collection"
+                                class="img-fluid hero-image"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CATEGORY COLLECTIONS
+             
+             HOME CATEGORY FLOW:
+             
+             CATEGORY CARD
+                    ↓
+             CATEGORY HERO PAGE
+                    ↓
+             EXPLORE MORE
+                    ↓
+             CATEGORY PRODUCTS
+        ====================================================== -->
+
+        <section
+            class="categories-section"
+            id="categories"
+        >
+
+            <div class="container">
+
+
+                <!-- SECTION HEADING -->
+
+                <div class="section-heading">
+
+                    <span>
+                        SHOP BY CATEGORY
+                    </span>
+
+                    <h2>
+                        Explore Our
+                        <strong>Collections</strong>
+                    </h2>
+
+                    <p>
+                        Choose a category and explore its
+                        dedicated collection.
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CATEGORY GRID
+                ================================================== -->
+
+                <div class="row g-4">
+
+
+                    <!-- =================================================
+                         MEN
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/men/men-hero.jpg"
+                                    alt="Men's Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="section-label">
+                                    COLLECTION
+                                </span>
+
+
+                                <h3>
+                                    Men's Collection
+                                </h3>
+
+
+                                <p>
+                                    Explore men's fashion,
+                                    clothing, shoes and more.
+                                </p>
+
+
+                                <a
+                                    href="men/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Men
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         WOMEN
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/women/women-hero.jpg"
+                                    alt="Women's Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="section-label">
+                                    COLLECTION
+                                </span>
+
+
+                                <h3>
+                                    Women's Collection
+                                </h3>
+
+
+                                <p>
+                                    Discover elegant fashion,
+                                    dresses, shoes and accessories.
+                                </p>
+
+
+                                <a
+                                    href="women/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Women
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         KIDS
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/kids/kids-hero.jpg"
+                                    alt="Kids' Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="section-label">
+                                    COLLECTION
+                                </span>
+
+
+                                <h3>
+                                    Kids' Collection
+                                </h3>
+
+
+                                <p>
+                                    Find fun, comfortable and
+                                    stylish products for kids.
+                                </p>
+
+
+                                <a
+                                    href="kids/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Kids
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ACCESSORIES
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/accessories/accessories-hero.jpg"
+                                    alt="Accessories Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="section-label">
+                                    COLLECTION
+                                </span>
+
+
+                                <h3>
+                                    Accessories
+                                </h3>
+
+
+                                <p>
+                                    Complete your look with
+                                    stylish bags, watches and more.
+                                </p>
+
+
+                                <a
+                                    href="accessories/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Accessories
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ELECTRONICS
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/electronics/electronics-hero.jpg"
+                                    alt="Electronics Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="section-label">
+                                    COLLECTION
+                                </span>
+
+
+                                <h3>
+                                    Electronics
+                                </h3>
+
+
+                                <p>
+                                    Explore gadgets, headphones,
+                                    smart devices and tech accessories.
+                                </p>
+
+
+                                <a
+                                    href="electronics/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Electronics
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ✨ RECOMMENDED FOR YOU
+             Hidden by default (d-none) — recommended.js shows
+             it once it has real personalized results, so
+             first-time visitors with no activity yet never see
+             an empty section.
+        ====================================================== -->
+
+        <section
+            class="recommended-section d-none"
+            id="recommendedForYou"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span>
+                        <i class="fas fa-sparkles"></i>
+                        SHOPPY PICKS
+                    </span>
+
+                    <h2>
+                        Recommended
+                        <strong>For You</strong>
+                    </h2>
+
+                    <p>
+                        Based on what you've viewed, saved and
+                        added to your cart.
+                    </p>
+
+                </div>
+
+                <div
+                    id="recommendedForYouGrid"
+                    class="row g-4"
+                >
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ABOUT
+        ====================================================== -->
+
+        <section
+            class="about-section"
+            id="about"
+        >
+
+            <div class="container">
+
+                <div class="section-heading">
+
+                    <span>
+                        ABOUT US
+                    </span>
+
+                    <h2>
+                        Why Choose
+                        <strong>ShopHub?</strong>
+                    </h2>
+
+                    <p>
+                        A simple shopping experience designed
+                        around what customers actually need.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- QUALITY -->
+
+                    <div class="col-md-4">
+
+                        <div class="about-card">
+
+                            <div class="about-icon">
+
+                                <i class="fas fa-box-open"></i>
+
+                            </div>
+
+                            <h3>
+                                Quality Products
+                            </h3>
+
+                            <p>
+                                Carefully selected products from
+                                different categories.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PRICES -->
+
+                    <div class="col-md-4">
+
+                        <div class="about-card">
+
+                            <div class="about-icon">
+
+                                <i class="fas fa-tags"></i>
+
+                            </div>
+
+                            <h3>
+                                Great Prices
+                            </h3>
+
+                            <p>
+                                Find products at competitive
+                                and affordable prices.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EASY SHOPPING -->
+
+                    <div class="col-md-4">
+
+                        <div class="about-card">
+
+                            <div class="about-icon">
+
+                                <i class="fas fa-shield-halved"></i>
+
+                            </div>
+
+                            <h3>
+                                Easy Shopping
+                            </h3>
+
+                            <p>
+                                Browse, add to cart and checkout
+                                with a simple experience.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SHOP CTA
+        ====================================================== -->
+
+        <section class="shop-cta">
+
+            <div class="container">
+
+                <div class="shop-cta-box">
+
+                    <div>
+
+                        <span>
+                            READY TO SHOP?
+                        </span>
+
+                        <h2>
+                            Explore Our
+                            <strong>Collections</strong>
+                        </h2>
+
+                        <p>
+                            Find fashion, accessories,
+                            kids products and electronics.
+                        </p>
+
+                    </div>
+
+
+                    <!-- ALL PRODUCTS -->
+
+                    <a
+                        href="shop/index.html"
+                        class="btn btn-light shop-cta-btn"
+                    >
+
+                        Explore Shop
+
+                        <i class="fas fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONTACT
+        ====================================================== -->
+
+        <section
+            class="contact-section"
+            id="contact"
+        >
+
+            <div class="container">
+
+
+                <div class="section-heading">
+
+                    <span>
+                        CONTACT
+                    </span>
+
+                    <h2>
+                        Get In
+                        <strong>Touch</strong>
+                    </h2>
+
+                    <p>
+                        Have a question?
+                        We'd love to hear from you.
+                    </p>
+
+                </div>
+
+
+                <div class="row g-4">
+
+
+                    <!-- CONTACT INFO -->
+
+                    <div class="col-lg-5">
+
+                        <div class="contact-info">
+
+
+                            <!-- EMAIL -->
+
+                            <div class="contact-item">
+
+                                <div class="contact-icon">
+
+                                    <i class="fas fa-envelope"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        Email
+                                    </h4>
+
+                                    <p>
+                                        support@shophub.com
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- PHONE -->
+
+                            <div class="contact-item">
+
+                                <div class="contact-icon">
+
+                                    <i class="fas fa-phone"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        Phone
+                                    </h4>
+
+                                    <p>
+                                        +92 3122803055
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- LOCATION -->
+
+                            <div class="contact-item">
+
+                                <div class="contact-icon">
+
+                                    <i class="fas fa-location-dot"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <h4>
+                                        Location
+                                    </h4>
+
+                                    <p>
+                                        Pakistan
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CONTACT FORM -->
+
+                    <div class="col-lg-7">
+
+                        <form
+                            id="contactForm"
+                            class="contact-form"
+                        >
+
+                            <div class="row g-3">
+
+
+                                <!-- NAME -->
+
+                                <div class="col-md-6">
+
+                                    <label for="name">
+                                        Your Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        placeholder="Enter your name"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- EMAIL -->
+
+                                <div class="col-md-6">
+
+                                    <label for="email">
+                                        Your Email
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        placeholder="Enter your email"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- SUBJECT -->
+
+                                <div class="col-12">
+
+                                    <label for="subject">
+                                        Subject
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="subject"
+                                        name="subject"
+                                        placeholder="Enter subject"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <!-- MESSAGE -->
+
+                                <div class="col-12">
+
+                                    <label for="message">
+                                        Message
+                                    </label>
+
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        rows="5"
+                                        placeholder="Write your message..."
+                                        required
+                                    ></textarea>
+
+                                </div>
+
+
+                                <!-- SUBMIT -->
+
+                                <div class="col-12">
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary-custom"
+                                    >
+
+                                        <i class="fas fa-paper-plane"></i>
+
+                                        Send Message
+
+                                    </button>
+
+                                </div>
+
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="row g-5">
+
+
+                <!-- BRAND -->
+
+                <div class="col-lg-5">
+
+                    <a
+                        href="index.html"
+                        class="footer-logo"
+                    >
+
+                        <i class="fas fa-bag-shopping"></i>
+
+                        Shop<span>Hub</span>
+
+                    </a>
+
+
+                    <p>
+
+                        Your modern shopping destination for
+                        fashion, accessories, kids products
+                        and electronics.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- QUICK LINKS -->
+
+                <div class="col-6 col-lg-3">
+
+                    <h5>
+                        Quick Links
+                    </h5>
+
+                    <ul>
+
+                        <li>
+                            <a href="index.html#home">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="category/index.html">
+                                Categories
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="index.html#about">
+                                About
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="index.html#contact">
+                                Contact
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="shop/index.html">
+                                Shop
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- SHOPPING -->
+
+                <div class="col-6 col-lg-4">
+
+                    <h5>
+                        Shopping
+                    </h5>
+
+                    <ul>
+
+                        <li>
+                            <a href="shop/index.html">
+                                Shop All
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="category/index.html">
+                                Categories
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="wishlist/index.html">
+                                Wishlist
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="cart/index.html">
+                                Cart
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="checkout/index.html">
+                                Checkout
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="admin-login/index.html">
+                                Admin Login
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 ShopHub. All Rights Reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div id="toast"></div>
+
+
+
+    <!-- =====================================================
+         BOOTSTRAP JS
+    ====================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+
+    <!-- =====================================================
+         ROOT JS
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+
+
+    <!-- =====================================================
+         SHARED PRODUCTS CATALOG
+         (needed by recommended.js for image URLs / add-to-cart)
+    ====================================================== -->
+
+    <script src="products/products.js"></script>
+
+
+
+    <!-- =====================================================
+         RECOMMENDED FOR YOU
+    ====================================================== -->
+
+    <script src="recommended.js"></script>
+
+
+
+    <!-- =====================================================
+         SHOPPY AI
+    ====================================================== -->
+
+    <script src="chatbot/chatbot.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="ShopHub - Explore all product categories"
+    >
+
+    <title>ShopHub - Categories</title>
+
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Root CSS -->
+    <link
+        rel="stylesheet"
+        href="../style.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           CATEGORY PAGE
+        ====================================================== */
+
+        .category-page {
+            padding: 90px 0 100px;
+        }
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .category-hero {
+            padding: 100px 20px 80px;
+            text-align: center;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(13, 110, 253, 0.08),
+                    rgba(111, 66, 193, 0.06)
+                );
+        }
+
+
+        .category-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+
+
+        .category-hero h1 {
+            font-size: clamp(40px, 6vw, 68px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+
+        .category-hero h1 span {
+            color: #0d6efd;
+        }
+
+
+        .category-hero p {
+            max-width: 650px;
+            margin: 0 auto;
+            font-size: 17px;
+            line-height: 1.7;
+            opacity: 0.75;
+        }
+
+
+        /* =====================================================
+           CATEGORY CARDS
+        ====================================================== */
+
+        .categories-grid {
+            padding: 90px 0;
+        }
+
+
+        .category-card {
+            position: relative;
+            height: 100%;
+            min-height: 470px;
+            overflow: hidden;
+            border-radius: 24px;
+            background: #ffffff;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.14);
+        }
+
+
+        .category-image {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+
+        .category-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+
+        .category-card:hover .category-image img {
+            transform: scale(1.07);
+        }
+
+
+        .category-image::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0, 0, 0, 0.35),
+                transparent 55%
+            );
+        }
+
+
+        .category-content {
+            padding: 28px 30px 30px;
+        }
+
+
+        .category-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: #0d6efd;
+            margin-bottom: 8px;
+        }
+
+
+        .category-content h2 {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+
+        .category-content p {
+            margin-bottom: 22px;
+            line-height: 1.6;
+            opacity: 0.7;
+        }
+
+
+        .category-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #0d6efd;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+
+        .category-btn:hover {
+            background: #0b5ed7;
+            color: #ffffff;
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           DARK MODE
+        ====================================================== */
+
+        body.dark-mode .category-card {
+            background: #171717;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+        }
+
+
+        body.dark-mode .category-hero {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(13, 110, 253, 0.12),
+                    rgba(111, 66, 193, 0.10)
+                );
+        }
+
+
+        body.dark-mode .category-content p {
+            opacity: 0.65;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 767px) {
+
+            .category-hero {
+                padding: 70px 20px 60px;
+            }
+
+
+            .category-page {
+                padding: 60px 0 70px;
+            }
+
+
+            .categories-grid {
+                padding: 60px 0;
+            }
+
+
+            .category-card {
+                min-height: auto;
+            }
+
+
+            .category-image {
+                height: 250px;
+            }
+
+
+            .category-content {
+                padding: 24px;
+            }
+
+
+            .category-content h2 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="main-header">
+
+        <div class="container">
+
+            <nav class="navbar navbar-expand-lg">
+
+
+                <!-- LOGO -->
+
+                <a
+                    href="../index.html"
+                    class="navbar-brand logo"
+                >
+
+                    <span class="logo-icon">
+                        <i class="fas fa-bag-shopping"></i>
+                    </span>
+
+                    Shop<span>Hub</span>
+
+                </a>
+
+
+                <!-- MOBILE MENU -->
+
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+
+                    <i class="fas fa-bars"></i>
+
+                </button>
+
+
+                <!-- NAVIGATION -->
+
+                <div
+                    class="collapse navbar-collapse"
+                    id="mainNavbar"
+                >
+
+                    <ul class="navbar-nav mx-auto main-nav">
+
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="../index.html"
+                            >
+                                Home
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="../shop/index.html"
+                            >
+                                Shop
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link active"
+                                href="index.html"
+                            >
+                                Categories
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="../index.html#about"
+                            >
+                                About
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="../index.html#contact"
+                            >
+                                Contact
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+
+                    <!-- HEADER ACTIONS -->
+
+                    <div class="header-actions">
+
+
+                        <!-- WISHLIST -->
+
+                        <a
+                            href="../wishlist/index.html"
+                            class="header-icon"
+                            aria-label="Wishlist"
+                            title="Wishlist"
+                        >
+
+                            <i class="far fa-heart"></i>
+
+                        </a>
+
+
+                        <!-- CART -->
+
+                        <a
+                            href="../cart/index.html"
+                            class="header-icon"
+                            aria-label="Shopping Cart"
+                            title="Shopping Cart"
+                        >
+
+                            <i class="fas fa-shopping-bag"></i>
+
+                        </a>
+
+
+                        <!-- ACCOUNT -->
+
+                        <a
+                            href="../login/index.html"
+                            class="header-icon"
+                            aria-label="Account"
+                            title="Account"
+                        >
+
+                            <i class="far fa-user"></i>
+
+                        </a>
+
+
+                        <!-- THEME -->
+
+                        <button
+                            type="button"
+                            id="themeToggle"
+                            class="header-icon theme-toggle"
+                            aria-label="Toggle dark mode"
+                            title="Toggle dark mode"
+                        >
+
+                            <i class="fas fa-moon"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CATEGORY HERO
+    ====================================================== -->
+
+    <section class="category-hero">
+
+        <div class="container">
+
+            <span class="category-badge">
+
+                <i class="fas fa-layer-group"></i>
+
+                SHOPHUB COLLECTIONS
+
+            </span>
+
+
+            <h1>
+
+                Explore Our
+                <span>Categories</span>
+
+            </h1>
+
+
+            <p>
+
+                Discover everything ShopHub has to offer.
+                Choose a collection to explore its dedicated
+                hero page and discover the products inside.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         CATEGORIES
+    ====================================================== -->
+
+    <main class="category-page">
+
+        <div class="container">
+
+            <div class="categories-grid">
+
+                <div class="row g-4">
+
+
+                    <!-- =================================================
+                         MEN
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/men/men-hero.jpg"
+                                    alt="Men's Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="category-label">
+                                    MEN'S COLLECTION
+                                </span>
+
+
+                                <h2>
+                                    Men
+                                </h2>
+
+
+                                <p>
+                                    Discover men's fashion,
+                                    clothing, shoes, watches
+                                    and more.
+                                </p>
+
+
+                                <a
+                                    href="../men/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Men
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         WOMEN
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/women/women-hero.jpg"
+                                    alt="Women's Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="category-label">
+                                    WOMEN'S COLLECTION
+                                </span>
+
+
+                                <h2>
+                                    Women
+                                </h2>
+
+
+                                <p>
+                                    Explore elegant dresses,
+                                    shoes, bags, jewelry and
+                                    more.
+                                </p>
+
+
+                                <a
+                                    href="../women/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Women
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         KIDS
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/kids/kids-hero.jpg"
+                                    alt="Kids Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="category-label">
+                                    KIDS COLLECTION
+                                </span>
+
+
+                                <h2>
+                                    Kids
+                                </h2>
+
+
+                                <p>
+                                    Find comfortable clothing,
+                                    fun toys, shoes and more
+                                    for kids.
+                                </p>
+
+
+                                <a
+                                    href="../kids/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Kids
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ACCESSORIES
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/accessories/accessories-hero.jpg"
+                                    alt="Accessories Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="category-label">
+                                    ACCESSORIES
+                                </span>
+
+
+                                <h2>
+                                    Accessories
+                                </h2>
+
+
+                                <p>
+                                    Complete your style with
+                                    watches, bags, jewelry and
+                                    other accessories.
+                                </p>
+
+
+                                <a
+                                    href="../accessories/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Accessories
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================================
+                         ELECTRONICS
+                    ================================================== -->
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="category-card">
+
+                            <div class="category-image">
+
+                                <img
+                                    src="http://localhost:5000/images/electronics/electronics-hero.jpg"
+                                    alt="Electronics Collection"
+                                    loading="lazy"
+                                >
+
+                            </div>
+
+
+                            <div class="category-content">
+
+                                <span class="category-label">
+                                    ELECTRONICS
+                                </span>
+
+
+                                <h2>
+                                    Electronics
+                                </h2>
+
+
+                                <p>
+                                    Explore gadgets, headphones,
+                                    smart devices and modern
+                                    technology.
+                                </p>
+
+
+                                <a
+                                    href="../electronics/index.html"
+                                    class="category-btn"
+                                >
+
+                                    Explore Electronics
+
+                                    <i class="fas fa-arrow-right"></i>
+
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="row g-5">
+
+
+                <!-- BRAND -->
+
+                <div class="col-lg-5">
+
+                    <a
+                        href="../index.html"
+                        class="footer-logo"
+                    >
+
+                        <i class="fas fa-bag-shopping"></i>
+
+                        Shop<span>Hub</span>
+
+                    </a>
+
+
+                    <p>
+
+                        Your modern shopping destination for
+                        fashion, accessories, kids products
+                        and electronics.
+
+                    </p>
+
+                </div>
+
+
+                <!-- QUICK LINKS -->
+
+                <div class="col-6 col-lg-3">
+
+                    <h5>
+                        Quick Links
+                    </h5>
+
+                    <ul>
+
+                        <li>
+                            <a href="../index.html">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../shop/index.html">
+                                Shop
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="index.html">
+                                Categories
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../index.html#about">
+                                About
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../index.html#contact">
+                                Contact
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- CATEGORIES -->
+
+                <div class="col-6 col-lg-4">
+
+                    <h5>
+                        Categories
+                    </h5>
+
+                    <ul>
+
+                        <li>
+                            <a href="../men/index.html">
+                                Men
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../women/index.html">
+                                Women
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../kids/index.html">
+                                Kids
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../accessories/index.html">
+                                Accessories
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../electronics/index.html">
+                                Electronics
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 ShopHub. All Rights Reserved.
+                </p>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         BOOTSTRAP JS
+    ====================================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+
+
+    <!-- =====================================================
+         THEME
+    ====================================================== -->
+
+    <script>
+
+        const themeToggle =
+            document.getElementById("themeToggle");
+
+        const themeIcon =
+            themeToggle?.querySelector("i");
+
+        const savedTheme =
+            localStorage.getItem("theme");
+
+
+        if (savedTheme === "dark") {
+
+            document.body.classList.add("dark-mode");
+
+            if (themeIcon) {
+
+                themeIcon.classList.remove("fa-moon");
+                themeIcon.classList.add("fa-sun");
+
+            }
+
+        }
+
+
+        themeToggle?.addEventListener("click", () => {
+
+            document.body.classList.toggle("dark-mode");
+
+            const isDark =
+                document.body.classList.contains("dark-mode");
+
+
+            localStorage.setItem(
+                "theme",
+                isDark ? "dark" : "light"
+            );
+
+
+            if (themeIcon) {
+
+                themeIcon.classList.toggle(
+                    "fa-moon",
+                    !isDark
+                );
+
+                themeIcon.classList.toggle(
+                    "fa-sun",
+                    isDark
+                );
+
+            }
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>

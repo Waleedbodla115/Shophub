@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ShopHub - Admin Dashboard</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Admin CSS -->
+    <link rel="stylesheet" href="./admin.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         ADMIN HEADER
+    ====================================================== -->
+
+    <header class="admin-header">
+
+        <div class="container admin-navbar">
+
+            <!-- Logo -->
+            <a href="../index.html" class="admin-logo">
+
+                <span class="admin-logo-icon">
+                    <i class="fas fa-bag-shopping"></i>
+                </span>
+
+                <span class="admin-logo-text">
+                    ShopHub
+                    <small>Admin</small>
+                </span>
+
+            </a>
+
+
+            <!-- Header Actions -->
+            <div class="admin-header-actions">
+
+                <a
+                    href="../index.html"
+                    class="header-action"
+                    title="Visit Store"
+                >
+                    <i class="fas fa-store"></i>
+                </a>
+
+                <button
+                    type="button"
+                    class="header-action theme-toggle"
+                    id="themeToggle"
+                    title="Toggle Theme"
+                >
+                    <i class="fas fa-moon"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         ADMIN LAYOUT
+    ====================================================== -->
+
+    <main class="admin-main">
+
+        <div class="container admin-container">
+
+
+            <!-- =================================================
+                 PAGE HEADER
+            ================================================== -->
+
+            <section class="admin-page-header">
+
+                <div>
+
+                    <span class="section-label">
+                        MANAGEMENT PANEL
+                    </span>
+
+                    <h1>
+                        Admin Dashboard
+                    </h1>
+
+                    <p>
+                        Manage your ShopHub orders and monitor sales.
+                    </p>
+
+                </div>
+
+
+                <div class="admin-page-actions">
+
+                    <a
+                        href="../orders/index.html"
+                        class="btn-secondary"
+                    >
+                        <i class="fas fa-box"></i>
+                        View Orders
+                    </a>
+
+                    <button
+                        type="button"
+                        class="btn-primary"
+                        id="refreshDashboardBtn"
+                    >
+                        <i class="fas fa-rotate"></i>
+                        Refresh
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 STATISTICS
+            ================================================== -->
+
+            <section class="stats-grid">
+
+
+                <!-- Total Orders -->
+                <article class="stat-card">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            Total Orders
+                        </span>
+
+                    </div>
+
+                    <div class="stat-value" id="totalOrders">
+                        0
+                    </div>
+
+                    <p class="stat-description">
+                        All customer orders
+                    </p>
+
+                </article>
+
+
+                <!-- Total Sales -->
+                <article class="stat-card">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            Total Sales
+                        </span>
+
+                    </div>
+
+                    <div class="stat-value" id="totalSales">
+                        $0.00
+                    </div>
+
+                    <p class="stat-description">
+                        Total order value
+                    </p>
+
+                </article>
+
+
+                <!-- Pending Orders -->
+                <article class="stat-card">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            Pending Orders
+                        </span>
+
+                    </div>
+
+                    <div class="stat-value" id="pendingOrders">
+                        0
+                    </div>
+
+                    <p class="stat-description">
+                        Orders awaiting processing
+                    </p>
+
+                </article>
+
+
+                <!-- Delivered Orders -->
+                <article class="stat-card">
+
+                    <div class="stat-card-top">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
+
+                        <span class="stat-label">
+                            Delivered Orders
+                        </span>
+
+                    </div>
+
+                    <div class="stat-value" id="deliveredOrders">
+                        0
+                    </div>
+
+                    <p class="stat-description">
+                        Successfully completed
+                    </p>
+
+                </article>
+
+            </section>
+
+
+            <!-- =================================================
+                 DASHBOARD CONTENT
+            ================================================== -->
+
+            <section class="dashboard-grid">
+
+
+                <!-- =================================================
+                     RECENT ORDERS
+                ================================================== -->
+
+                <div class="dashboard-card recent-orders-card">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <h2>
+                                Recent Orders
+                            </h2>
+
+                            <p>
+                                Latest customer orders
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="../orders/index.html"
+                            class="view-all-link"
+                        >
+                            View All
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        class="recent-orders"
+                        id="recentOrders"
+                    >
+
+                        <!-- Orders will be loaded by admin.js -->
+
+                        <div class="dashboard-loading">
+
+                            <i class="fas fa-spinner fa-spin"></i>
+
+                            <span>
+                                Loading orders...
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ORDER STATUS
+                ================================================== -->
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <h2>
+                                Order Status
+                            </h2>
+
+                            <p>
+                                Current order distribution
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-overview">
+
+
+                        <!-- Pending -->
+                        <div class="status-row">
+
+                            <div class="status-row-left">
+
+                                <span class="status-dot pending"></span>
+
+                                <span>
+                                    Pending
+                                </span>
+
+                            </div>
+
+                            <strong id="statusPending">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Processing -->
+                        <div class="status-row">
+
+                            <div class="status-row-left">
+
+                                <span class="status-dot processing"></span>
+
+                                <span>
+                                    Processing
+                                </span>
+
+                            </div>
+
+                            <strong id="statusProcessing">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Shipped -->
+                        <div class="status-row">
+
+                            <div class="status-row-left">
+
+                                <span class="status-dot shipped"></span>
+
+                                <span>
+                                    Shipped
+                                </span>
+
+                            </div>
+
+                            <strong id="statusShipped">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Delivered -->
+                        <div class="status-row">
+
+                            <div class="status-row-left">
+
+                                <span class="status-dot delivered"></span>
+
+                                <span>
+                                    Delivered
+                                </span>
+
+                            </div>
+
+                            <strong id="statusDelivered">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <!-- Cancelled -->
+                        <div class="status-row">
+
+                            <div class="status-row-left">
+
+                                <span class="status-dot cancelled"></span>
+
+                                <span>
+                                    Cancelled
+                                </span>
+
+                            </div>
+
+                            <strong id="statusCancelled">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 QUICK ACTIONS
+            ================================================== -->
+
+            <section class="quick-actions-section">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            QUICK ACTIONS
+                        </span>
+
+                        <h2>
+                            Manage ShopHub
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="quick-actions-grid">
+
+
+                    <!-- Orders -->
+                    <a
+                        href="../orders/index.html"
+                        class="quick-action-card"
+                    >
+
+                        <span class="quick-action-icon">
+                            <i class="fas fa-box-open"></i>
+                        </span>
+
+                        <span class="quick-action-content">
+
+                            <strong>
+                                Manage Orders
+                            </strong>
+
+                            <small>
+                                View and update customer orders
+                            </small>
+
+                        </span>
+
+                        <i class="fas fa-arrow-right quick-action-arrow"></i>
+
+                    </a>
+
+
+                    <!-- Store -->
+                    <a
+                        href="../index.html"
+                        class="quick-action-card"
+                    >
+
+                        <span class="quick-action-icon">
+                            <i class="fas fa-store"></i>
+                        </span>
+
+                        <span class="quick-action-content">
+
+                            <strong>
+                                Visit Store
+                            </strong>
+
+                            <small>
+                                Open ShopHub storefront
+                            </small>
+
+                        </span>
+
+                        <i class="fas fa-arrow-right quick-action-arrow"></i>
+
+                    </a>
+
+
+                    <!-- Shop -->
+                    <a
+                        href="../shop/index.html"
+                        class="quick-action-card"
+                    >
+
+                        <span class="quick-action-icon">
+                            <i class="fas fa-cart-shopping"></i>
+                        </span>
+
+                        <span class="quick-action-content">
+
+                            <strong>
+                                View Products
+                            </strong>
+
+                            <small>
+                                Browse ShopHub products
+                            </small>
+
+                        </span>
+
+                        <i class="fas fa-arrow-right quick-action-arrow"></i>
+
+                    </a>
+
+
+                    <!-- Refresh -->
+                    <button
+                        type="button"
+                        class="quick-action-card quick-action-button"
+                        id="quickRefreshBtn"
+                    >
+
+                        <span class="quick-action-icon">
+                            <i class="fas fa-rotate"></i>
+                        </span>
+
+                        <span class="quick-action-content">
+
+                            <strong>
+                                Refresh Dashboard
+                            </strong>
+
+                            <small>
+                                Reload latest order information
+                            </small>
+
+                        </span>
+
+                        <i class="fas fa-arrow-right quick-action-arrow"></i>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PRODUCT MANAGEMENT
+            ================================================== -->
+
+            <section class="products-section">
+
+                <div class="dashboard-card products-card">
+
+                    <div class="dashboard-card-header">
+
+                        <div>
+
+                            <h2>
+                                Product Management
+                            </h2>
+
+                            <p>
+                                Add, edit, or remove ShopHub products
+                            </p>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="btn-primary"
+                            id="addProductBtn"
+                        >
+                            <i class="fas fa-plus"></i>
+                            Add Product
+                        </button>
+
+                    </div>
+
+                    <div class="products-table-wrap">
+
+                        <table class="products-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Rating</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="productsTableBody">
+
+                                <tr class="products-loading-row">
+                                    <td colspan="6">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Loading products...
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         ADD / EDIT PRODUCT MODAL
+    ====================================================== -->
+
+    <div class="product-modal-overlay" id="productModalOverlay" style="display:none;">
+
+        <div class="product-modal">
+
+            <div class="product-modal-header">
+
+                <h3 id="productModalTitle">
+                    Add Product
+                </h3>
+
+                <button type="button" id="productModalClose" aria-label="Close">
+                    <i class="fas fa-xmark"></i>
+                </button>
+
+            </div>
+
+            <form id="productForm" class="product-form">
+
+                <input type="hidden" id="productId">
+
+                <div class="form-group">
+                    <label for="productName">Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="productCategory">Category</label>
+                    <select id="productCategory" required>
+                        <option value="men">Men</option>
+                        <option value="women">Women</option>
+                        <option value="kids">Kids</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="electronics">Electronics</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+                        <label for="productPrice">Price ($)</label>
+                        <input type="number" id="productPrice" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="productStock">Stock</label>
+                        <input type="number" id="productStock" min="0" step="1" required>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="productImage">Image URL</label>
+                    <input type="text" id="productImage" placeholder="http://localhost:5000/images/men/example.jpg">
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="productRating">Rating (0–5)</label>
+                    <input type="number" id="productRating" min="0" max="5" step="0.1" value="0">
+                </div>
+
+                <p class="product-form-error" id="productFormError" style="display:none;"></p>
+
+                <div class="product-form-actions">
+                    <button type="button" class="btn-secondary" id="productCancelBtn">Cancel</button>
+                    <button type="submit" class="btn-primary" id="productSaveBtn">Save Product</button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="admin-footer">
+
+        <div class="container">
+
+            <p>
+                © 2026 ShopHub Admin Panel. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         ADMIN JAVASCRIPT
+    ====================================================== -->
+
+    <script src="./admin.js"></script>
+
+    <script src="../chatbot/chatbot.js"></script>
+</body>
+</html>

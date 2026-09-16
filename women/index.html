@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ShopHub - Women's Collection">
+    <title>ShopHub - Women</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Root CSS -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Women CSS -->
+    <link rel="stylesheet" href="women.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="main-header">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand logo" href="../index.html">
+                    <i class="fas fa-bag-shopping"></i> Shop<span>Hub</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../shop/index.html">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../men/index.html">Men</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Women</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../kids/index.html">Kids</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../accessories/index.html">Accessories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../electronics/index.html">Electronics</a>
+                        </li>
+                    </ul>
+                    <div class="header-actions">
+                        <a href="../wishlist/index.html" class="header-icon">
+                            <i class="far fa-heart"></i>
+                        </a>
+                        <button type="button" id="themeToggle" class="header-icon theme-toggle">
+                            <i class="fas fa-moon"></i>
+                        </button>
+                        <a href="../cart/index.html" class="header-icon cart-wrapper">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count icon-badge">0</span>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- WOMEN HERO -->
+    <section class="women-hero">
+        <div class="container">
+            <div class="women-hero-content text-center">
+                <span class="women-badge">WOMEN'S COLLECTION</span>
+                <h1>Style For <span>Every Her</span></h1>
+                <p>Discover premium women's fashion, shoes and accessories</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WOMEN PRODUCTS -->
+    <section class="women-products-section">
+        <div class="container">
+            <div class="shop-controls">
+                <div class="result-count">
+                    <span id="productCount">0</span> Products
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search women's products...">
+                </div>
+                <div class="sort-box">
+                    <select id="sortSelect">
+                        <option value="default">Sort By</option>
+                        <option value="low">Price: Low to High</option>
+                        <option value="high">Price: High to Low</option>
+                        <option value="name">Name: A-Z</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-4" id="productsContainer"></div>
+
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-box-open"></i>
+                <h3>No Products Found</h3>
+                <p>Try another search</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <a href="../index.html" class="footer-logo">
+                        <i class="fas fa-bag-shopping"></i> Shop<span>Hub</span>
+                    </a>
+                    <p>Your one-stop destination for fashion, accessories, kids products and electronics.</p>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../shop/index.html">Shop</a></li>
+                        <li><a href="../cart/index.html">Cart</a></li>
+                        <li><a href="../wishlist/index.html">Wishlist</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-3">
+                    <h5>Categories</h5>
+                    <ul>
+                        <li><a href="../men/index.html">Men</a></li>
+                        <li><a href="index.html">Women</a></li>
+                        <li><a href="../kids/index.html">Kids</a></li>
+                        <li><a href="../accessories/index.html">Accessories</a></li>
+                        <li><a href="../electronics/index.html">Electronics</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h5>Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="footer-bottom">
+                <p>© 2026 ShopHub. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast -->
+    <div id="toast"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Women JS -->
+    <script src="../products/products.js"></script>
+    <script src="./women.js"></script>
+    <script src="../chatbot/chatbot.js"></script>
+</body>
+
+</html>

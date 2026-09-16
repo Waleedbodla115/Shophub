@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="ShopHub - Your Wishlist"
+    >
+
+    <title>ShopHub - Wishlist</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Wishlist CSS -->
+    <link
+        rel="stylesheet"
+        href="./wishlist.css"
+    >
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="site-header">
+
+    <div class="header-container">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="../index.html"
+            class="logo"
+        >
+            <i class="fas fa-bag-shopping"></i>
+            ShopHub
+        </a>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="main-nav">
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../shop/index.html">
+                Shop
+            </a>
+
+            <a href="../men/index.html">
+                Men
+            </a>
+
+            <a href="../women/index.html">
+                Women
+            </a>
+
+            <a href="../kids/index.html">
+                Kids
+            </a>
+
+            <a href="../accessories/index.html">
+                Accessories
+            </a>
+
+            <a href="../electronics/index.html">
+                Electronics
+            </a>
+
+        </nav>
+
+
+        <!-- HEADER ACTIONS -->
+
+        <div class="header-actions">
+
+
+            <!-- WISHLIST -->
+
+            <a
+                href="./index.html"
+                class="header-icon active"
+                title="Wishlist"
+            >
+
+                <i class="fas fa-heart"></i>
+
+                <span class="wishlist-count">
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- CART -->
+
+            <a
+                href="../cart/index.html"
+                class="header-icon"
+                title="Cart"
+            >
+
+                <i class="fas fa-shopping-cart"></i>
+
+                <span class="cart-count icon-badge">
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- THEME -->
+
+            <button
+                type="button"
+                id="themeToggle"
+                class="header-icon theme-toggle"
+                aria-label="Toggle theme"
+            >
+
+                <i class="fas fa-moon"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MOBILE NAVIGATION
+===================================================== -->
+
+<div
+    class="mobile-nav"
+    id="mobileNav"
+>
+
+    <a href="../index.html">
+
+        <i class="fas fa-house"></i>
+
+        <span>
+            Home
+        </span>
+
+    </a>
+
+
+    <a href="../shop/index.html">
+
+        <i class="fas fa-store"></i>
+
+        <span>
+            Shop
+        </span>
+
+    </a>
+
+
+    <a
+        href="./index.html"
+        class="active"
+    >
+
+        <i class="fas fa-heart"></i>
+
+        <span>
+            Wishlist
+        </span>
+
+    </a>
+
+
+    <a href="../cart/index.html">
+
+        <i class="fas fa-cart-shopping"></i>
+
+        <span>
+            Cart
+        </span>
+
+    </a>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN WISHLIST
+===================================================== -->
+
+<main class="wishlist-page">
+
+
+    <!-- =================================================
+         BREADCRUMB
+    ================================================== -->
+
+    <section class="breadcrumb-section">
+
+        <div class="container">
+
+            <div class="breadcrumb">
+
+                <a href="../index.html">
+                    Home
+                </a>
+
+                <i class="fas fa-chevron-right"></i>
+
+                <span>
+                    Wishlist
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         WISHLIST HEADING
+    ================================================== -->
+
+    <section class="wishlist-heading-section">
+
+        <div class="container">
+
+            <div class="wishlist-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        YOUR FAVORITES
+                    </span>
+
+                    <h1>
+                        My Wishlist
+                    </h1>
+
+                    <p>
+                        <span id="wishlistItemsCount">
+                            0 Items
+                        </span>
+                        saved for later.
+                    </p>
+
+                </div>
+
+
+                <div class="wishlist-heading-actions">
+
+                    <div class="search-box">
+
+                        <i class="fas fa-search"></i>
+
+                        <input
+                            type="search"
+                            id="wishlistSearch"
+                            placeholder="Search wishlist..."
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        id="clearWishlistBtn"
+                    >
+                        <i class="fas fa-trash"></i>
+                        Clear All
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         WISHLIST GRID
+    ================================================== -->
+
+    <section class="wishlist-content-section">
+
+        <div class="container">
+
+
+            <!-- Product Grid -->
+
+            <div
+                id="wishlistContainer"
+                class="wishlist-grid"
+            >
+
+                <!-- wishlist.js renders product cards here -->
+
+                <div class="wishlist-loading">
+
+                    <i class="fas fa-spinner fa-spin"></i>
+
+                    <p>
+                        Loading wishlist...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Empty State -->
+
+            <div
+                id="emptyWishlist"
+                class="empty-wishlist"
+                hidden
+            >
+
+                <!-- wishlist.js fills this in when empty -->
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="site-footer">
+
+    <div class="container footer-content">
+
+
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+            <a href="../index.html" class="logo">
+
+                <span class="logo-icon">
+                    <i class="fas fa-bag-shopping"></i>
+                </span>
+
+                <span class="logo-text">
+                    ShopHub
+                </span>
+
+            </a>
+
+            <p>
+                Discover quality products for every
+                style, need, and lifestyle.
+            </p>
+
+        </div>
+
+
+        <!-- Quick Links -->
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="../index.html">
+                Home
+            </a>
+
+            <a href="../shop/index.html">
+                Shop
+            </a>
+
+            <a href="./index.html">
+                Wishlist
+            </a>
+
+            <a href="../cart/index.html">
+                Cart
+            </a>
+
+        </div>
+
+
+        <!-- Customer Service -->
+
+        <div class="footer-column">
+
+            <h3>
+                Customer Service
+            </h3>
+
+            <a href="#">
+                Contact Us
+            </a>
+
+            <a href="#">
+                Shipping Information
+            </a>
+
+            <a href="#">
+                Returns & Refunds
+            </a>
+
+            <a href="#">
+                FAQ
+            </a>
+
+        </div>
+
+
+        <!-- Social -->
+
+        <div class="footer-column">
+
+            <h3>
+                Follow Us
+            </h3>
+
+            <div class="social-links">
+
+                <a
+                    href="#"
+                    aria-label="Facebook"
+                >
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="Instagram"
+                >
+                    <i class="fab fa-instagram"></i>
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="Twitter"
+                >
+                    <i class="fab fa-twitter"></i>
+                </a>
+
+                <a
+                    href="#"
+                    aria-label="YouTube"
+                >
+                    <i class="fab fa-youtube"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- Footer Bottom -->
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <p>
+                © 2026 ShopHub. All rights reserved.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     WISHLIST JAVASCRIPT
+===================================================== -->
+
+<script src="../products/products.js"></script>
+<script src="./wishlist.js"></script>
+
+
+    <script src="../chatbot/chatbot.js"></script>
+</body>
+
+</html>

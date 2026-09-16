@@ -1,0 +1,155 @@
+/* ==============================================
+   SHOPHUB ADD TO CART SUCCESS TOAST
+============================================== */
+
+#toast {
+    position: fixed;
+
+    top: 90px;
+    right: 25px;
+
+    z-index: 99999;
+
+    min-width: 300px;
+    max-width: 400px;
+
+    padding: 16px 22px;
+
+    background: #198754;
+    color: #ffffff;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(120%);
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* SHOW TOAST */
+
+#toast.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateX(0);
+}
+
+/* DARK MODE */
+
+.dark-mode #toast {
+    background: #20c997;
+    color: #ffffff;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* MOBILE */
+
+@media (max-width: 576px) {
+
+    #toast {
+        top: 75px;
+
+        left: 15px;
+        right: 15px;
+
+        min-width: auto;
+        max-width: none;
+
+        text-align: center;
+
+        padding: 14px 18px;
+
+        font-size: 14px;
+    }
+}/* ==============================================
+   SHOPHUB ADD TO CART SUCCESS TOAST
+============================================== */
+
+#toast {
+    position: fixed;
+
+    top: 90px;
+    right: 25px;
+
+    z-index: 99999;
+
+    min-width: 300px;
+    max-width: 400px;
+
+    padding: 16px 22px;
+
+    background: #198754;
+    color: #ffffff;
+
+    border-radius: 12px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    line-height: 1.5;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.20);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateX(120%);
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease,
+        transform 0.3s ease;
+}
+
+/* SHOW TOAST */
+
+#toast.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateX(0);
+}
+
+/* DARK MODE */
+
+.dark-mode #toast {
+    background: #20c997;
+    color: #ffffff;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* MOBILE */
+
+@media (max-width: 576px) {
+
+    #toast {
+        top: 75px;
+
+        left: 15px;
+        right: 15px;
+
+        min-width: auto;
+        max-width: none;
+
+        text-align: center;
+
+        padding: 14px 18px;
+
+        font-size: 14px;
+    }
+}

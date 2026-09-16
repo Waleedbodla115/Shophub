@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>ShopHub Admin - Orders</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <!-- Orders CSS -->
+    <link
+        rel="stylesheet"
+        href="./orders.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="admin-header">
+
+        <div class="container admin-navbar">
+
+            <!-- Logo -->
+
+            <a
+                href="../admin/index.html"
+                class="admin-logo"
+            >
+                <span class="admin-logo-icon">
+                    <i class="fas fa-store"></i>
+                </span>
+
+                <span class="admin-logo-text">
+                    ShopHubAdmin
+                </span>
+            </a>
+
+
+            <!-- Header Actions -->
+
+            <div class="admin-header-actions">
+
+                <a
+                    href="../index.html"
+                    class="header-btn"
+                    title="Visit Store"
+                >
+                    <i class="fas fa-store"></i>
+                    <span>Store</span>
+                </a>
+
+                <button
+                    type="button"
+                    class="header-btn"
+                    id="themeToggle"
+                    title="Toggle Theme"
+                >
+                    <i class="fas fa-moon"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main>
+
+        <!-- Breadcrumb -->
+
+        <section class="breadcrumb-section">
+
+            <div class="container">
+
+                <div class="breadcrumb">
+
+                    <a href="../admin/index.html">
+                        Admin
+                    </a>
+
+                    <i class="fas fa-chevron-right"></i>
+
+                    <span>
+                        Orders
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PAGE HEADING
+        ================================================== -->
+
+        <section class="orders-heading-section">
+
+            <div class="container">
+
+                <div class="orders-heading">
+
+                    <div>
+
+                        <span class="section-label">
+                            MANAGEMENT PANEL
+                        </span>
+
+                        <h1>
+                            Orders
+                        </h1>
+
+                        <p>
+                            View and manage all ShopHub customer orders.
+                        </p>
+
+                    </div>
+
+
+                    <div class="heading-actions">
+
+                        <button
+                            type="button"
+                            class="btn-secondary"
+                            id="refreshOrdersBtn"
+                        >
+                            <i class="fas fa-sync-alt"></i>
+                            Refresh
+                        </button>
+
+                        <a
+                            href="../admin/index.html"
+                            class="btn-primary"
+                        >
+                            <i class="fas fa-chart-line"></i>
+                            Dashboard
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ORDER STATISTICS
+        ================================================== -->
+
+        <section class="order-stats-section">
+
+            <div class="container">
+
+                <div class="order-stats-grid">
+
+                    <!-- Total -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                Total Orders
+                            </span>
+
+                            <strong id="totalOrders">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Pending -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                Pending
+                            </span>
+
+                            <strong id="pendingOrders">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Processing -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-gears"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                Processing
+                            </span>
+
+                            <strong id="processingOrders">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Shipped -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                Shipped
+                            </span>
+
+                            <strong id="shippedOrders">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Delivered -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-circle-check"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                Delivered
+                            </span>
+
+                            <strong id="deliveredOrders">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Cancelled -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            <i class="fas fa-circle-xmark"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                Cancelled
+                            </span>
+
+                            <strong id="cancelledOrders">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ORDERS MANAGEMENT
+        ================================================== -->
+
+        <section class="orders-section">
+
+            <div class="container">
+
+                <div class="orders-card">
+
+
+                    <!-- Orders Toolbar -->
+
+                    <div class="orders-toolbar">
+
+                        <div class="toolbar-title">
+
+                            <h2>
+                                All Orders
+                            </h2>
+
+                            <p>
+                                Manage customer orders and order status.
+                            </p>
+
+                        </div>
+
+
+                        <div class="toolbar-controls">
+
+                            <!-- Search -->
+
+                            <div class="search-box">
+
+                                <i class="fas fa-search"></i>
+
+                                <input
+                                    type="search"
+                                    id="orderSearch"
+                                    placeholder="Search order or customer..."
+                                    autocomplete="off"
+                                >
+
+                            </div>
+
+
+                            <!-- Status Filter -->
+
+                            <div class="filter-box">
+
+                                <i class="fas fa-filter"></i>
+
+                                <select id="statusFilter">
+
+                                    <option value="all">
+                                        All Status
+                                    </option>
+
+                                    <option value="Pending">
+                                        Pending
+                                    </option>
+
+                                    <option value="Processing">
+                                        Processing
+                                    </option>
+
+                                    <option value="Shipped">
+                                        Shipped
+                                    </option>
+
+                                    <option value="Delivered">
+                                        Delivered
+                                    </option>
+
+                                    <option value="Cancelled">
+                                        Cancelled
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Orders Table -->
+
+                    <div class="orders-table-wrapper">
+
+                        <table class="orders-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Order
+                                    </th>
+
+                                    <th>
+                                        Customer
+                                    </th>
+
+                                    <th>
+                                        Date
+                                    </th>
+
+                                    <th>
+                                        Items
+                                    </th>
+
+                                    <th>
+                                        Total
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="ordersTableBody">
+
+                                <tr>
+
+                                    <td
+                                        colspan="7"
+                                        class="loading-cell"
+                                    >
+
+                                        <div class="loading-state">
+
+                                            <i class="fas fa-spinner fa-spin"></i>
+
+                                            <span>
+                                                Loading orders...
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- Empty State -->
+
+                    <div
+                        id="ordersEmpty"
+                        class="orders-empty"
+                        hidden
+                    >
+
+                        <div class="empty-icon">
+
+                            <i class="fas fa-box-open"></i>
+
+                        </div>
+
+                        <h3>
+                            No Orders Found
+                        </h3>
+
+                        <p>
+                            There are no orders matching your current search or filter.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Pagination Area -->
+
+                    <div
+                        class="orders-footer"
+                        id="ordersFooter"
+                    >
+
+                        <span id="ordersResultInfo">
+                            Showing 0 orders
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         ORDER DETAILS MODAL
+    ====================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="orderModal"
+        hidden
+    >
+
+        <div
+            class="order-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="orderModalTitle"
+        >
+
+            <!-- Modal Header -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="modal-label">
+                        ORDER DETAILS
+                    </span>
+
+                    <h2 id="orderModalTitle">
+                        Order Details
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    id="closeOrderModal"
+                    aria-label="Close"
+                >
+                    <i class="fas fa-times"></i>
+                </button>
+
+            </div>
+
+
+            <!-- Modal Body -->
+
+            <div
+                class="modal-body"
+                id="orderModalBody"
+            >
+
+                <!-- JavaScript will insert order details here -->
+
+            </div>
+
+
+            <!-- Modal Footer -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    id="cancelModalBtn"
+                >
+                    Close
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        class="admin-toast"
+        id="adminToast"
+        role="status"
+        aria-live="polite"
+    >
+        <i class="fas fa-check-circle"></i>
+
+        <span id="adminToastMessage">
+            Done
+        </span>
+
+    </div>
+
+
+    <!-- =====================================================
+         MOBILE NAV
+    ====================================================== -->
+
+    <nav class="mobile-admin-nav">
+
+        <a href="../admin/index.html">
+
+            <i class="fas fa-chart-pie"></i>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="./index.html"
+            class="active"
+        >
+
+            <i class="fas fa-box"></i>
+
+            <span>
+                Orders
+            </span>
+
+        </a>
+
+
+        <a href="../shop/index.html">
+
+            <i class="fas fa-store"></i>
+
+            <span>
+                Store
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="./orders.js"></script>
+
+    <script src="../chatbot/chatbot.js"></script>
+</body>
+</html>
