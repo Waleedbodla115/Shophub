@@ -48,9 +48,7 @@ connectDB();
 // STRIPE WEBHOOK
 // MUST be registered BEFORE express.json() below.
 // Stripe requires the RAW request body (not JSON-parsed)
-// to verify the webhook signature. If express.json() runs
-// first, req.body becomes a parsed object and signature
-// verification will always fail.
+// to verify the webhook signature.
 // =========================================================
 
 app.post(
@@ -61,10 +59,6 @@ app.post(
 
 // =========================================================
 // JSON BODY PARSER
-// Must come AFTER the Stripe webhook route above (webhook
-// needs the raw body), but BEFORE every other route below —
-// otherwise req.body is undefined everywhere else (orders,
-// auth, products, wishlist, chat, ai).
 // =========================================================
 
 app.use(express.json());
@@ -85,11 +79,12 @@ app.use(
         exposedHeaders: ["X-AI-Products"]
     })
 );
+
 // =========================================================
 // STATIC IMAGES
 // IMPORTANT:
 // DO NOT CHANGE IMAGE PATH
-// http://localhost:5000/images/...
+// /images/...
 // =========================================================
 
 app.use(
@@ -138,6 +133,10 @@ app.use(
     "/api/orders",
     orderRoutes
 );
+
+// =========================================================
+// PAYMENT API
+// =========================================================
 
 app.use(
     "/api/payments",
@@ -212,14 +211,25 @@ app.use((error, req, res, next) => {
 });
 
 // =========================================================
-// START SERVER
+// LOCAL SERVER
+// Vercel handles the app itself in production.
 // =========================================================
 
-app.listen(PORT, () => {
+if (require.main === module) {
 
-    console.log("=================================");
-    console.log("🚀 ShopHub Backend Started");
-    console.log(`📡 Server: http://localhost:${PORT}`);
-    console.log("=================================");
+    app.listen(PORT, () => {
 
-});
+        console.log("=================================");
+        console.log("🚀 ShopHub Backend Started");
+        console.log(`📡 Server: http://localhost:${PORT}`);
+        console.log("=================================");
+
+    });
+
+}
+
+// =========================================================
+// EXPORT APP FOR VERCEL
+// =========================================================
+
+module.exports = app;
