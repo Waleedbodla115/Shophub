@@ -1,10 +1,11 @@
 ﻿"use strict";
 
-require("dotenv").config();
-
+const dotenv = require("dotenv");
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+
+dotenv.config();
 
 const connectDB = require("./config/db");
 
@@ -22,8 +23,6 @@ const aiRoutes = require("./routes/aiRoutes");
 
 // =========================================================
 // WEBHOOK CONTROLLER
-// IMPORTANT: imported separately because this route needs
-// raw body parsing, registered BEFORE express.json() below
 // =========================================================
 
 const {
@@ -39,6 +38,21 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // =========================================================
+// ENVIRONMENT CHECK
+// Does NOT print the secret itself
+// =========================================================
+
+console.log(
+    "JWT_SECRET available:",
+    Boolean(process.env.JWT_SECRET)
+);
+
+console.log(
+    "MONGO_URI available:",
+    Boolean(process.env.MONGO_URI)
+);
+
+// =========================================================
 // DATABASE
 // =========================================================
 
@@ -46,14 +60,14 @@ connectDB();
 
 // =========================================================
 // STRIPE WEBHOOK
-// MUST be registered BEFORE express.json() below.
-// Stripe requires the RAW request body (not JSON-parsed)
-// to verify the webhook signature.
+// MUST be before express.json()
 // =========================================================
 
 app.post(
     "/api/payments/webhook",
-    express.raw({ type: "application/json" }),
+    express.raw({
+        type: "application/json"
+    }),
     stripeWebhookHandler
 );
 
@@ -61,7 +75,9 @@ app.post(
 // JSON BODY PARSER
 // =========================================================
 
-app.use(express.json());
+app.use(
+    express.json()
+);
 
 app.use(
     express.urlencoded({
@@ -70,27 +86,30 @@ app.use(
 );
 
 // =========================================================
-// MIDDLEWARE
+// CORS
 // =========================================================
 
 app.use(
     cors({
         origin: true,
-        exposedHeaders: ["X-AI-Products"]
+        exposedHeaders: [
+            "X-AI-Products"
+        ]
     })
 );
 
 // =========================================================
 // STATIC IMAGES
-// IMPORTANT:
-// DO NOT CHANGE IMAGE PATH
-// /images/...
+// DO NOT CHANGE /images PATH
 // =========================================================
 
 app.use(
     "/images",
     express.static(
-        path.join(__dirname, "images")
+        path.join(
+            __dirname,
+            "images"
+        )
     )
 );
 
@@ -98,14 +117,16 @@ app.use(
 // TEST ROUTE
 // =========================================================
 
-app.get("/", (req, res) => {
-
-    res.status(200).json({
-        success: true,
-        message: "ShopHub Backend API is running"
-    });
-
-});
+app.get(
+    "/",
+    (req, res) => {
+        res.status(200).json({
+            success: true,
+            message:
+                "ShopHub Backend API is running"
+        });
+    }
+);
 
 // =========================================================
 // AUTH API
@@ -174,58 +195,63 @@ app.use(
 // 404 HANDLER
 // =========================================================
 
-app.use((req, res) => {
-
-    res.status(404).json({
-
-        success: false,
-
-        message:
-            `Route not found: ${req.method} ${req.originalUrl}`
-
-    });
-
-});
+app.use(
+    (req, res) => {
+        res.status(404).json({
+            success: false,
+            message:
+                `Route not found: ${req.method} ${req.originalUrl}`
+        });
+    }
+);
 
 // =========================================================
 // ERROR HANDLER
 // =========================================================
 
-app.use((error, req, res, next) => {
+app.use(
+    (error, req, res, next) => {
+        console.error(
+            "❌ Server Error:",
+            error
+        );
 
-    console.error(
-        "❌ Server Error:",
-        error
-    );
-
-    res.status(500).json({
-
-        success: false,
-
-        message: "Internal server error",
-
-        error: error.message
-
-    });
-
-});
+        res.status(500).json({
+            success: false,
+            message:
+                "Internal server error",
+            error:
+                error.message
+        });
+    }
+);
 
 // =========================================================
 // LOCAL SERVER
-// Vercel handles the app itself in production.
+// Vercel handles production automatically
 // =========================================================
 
 if (require.main === module) {
+    app.listen(
+        PORT,
+        () => {
+            console.log(
+                "================================="
+            );
 
-    app.listen(PORT, () => {
+            console.log(
+                "🚀 ShopHub Backend Started"
+            );
 
-        console.log("=================================");
-        console.log("🚀 ShopHub Backend Started");
-        console.log(`📡 Server: http://localhost:${PORT}`);
-        console.log("=================================");
+            console.log(
+                `📡 Server: http://localhost:${PORT}`
+            );
 
-    });
-
+            console.log(
+                "================================="
+            );
+        }
+    );
 }
 
 // =========================================================
