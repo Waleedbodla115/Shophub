@@ -1,11 +1,7 @@
 "use strict";
 
-/* =========================================================
-   SHOPHUB REGISTER
-========================================================= */
-
 // =========================================================
-// CONFIG
+// SHOPHUB REGISTER
 // =========================================================
 
 const API_BASE_URL =
@@ -26,7 +22,8 @@ const btn = document.getElementById("registerBtn");
 const btnText = document.getElementById("registerBtnText");
 const btnIcon = document.getElementById("registerBtnIcon");
 const password = document.getElementById("password");
-const confirm = document.getElementById("confirmPassword");
+const confirmPassword =
+    document.getElementById("confirmPassword");
 const strength = document.getElementById("strength");
 const toggle = document.getElementById("passwordToggle");
 
@@ -76,7 +73,11 @@ function saveAuth(data) {
     }
 
     try {
-        localStorage.setItem("authToken", data.token);
+        localStorage.setItem(
+            "authToken",
+            data.token
+        );
+
         localStorage.setItem(
             "authUser",
             JSON.stringify(data.user)
@@ -102,18 +103,18 @@ function updateStrength() {
         return;
     }
 
-    const p = password.value;
+    const value = password.value;
 
     let text = "Use at least 6 characters.";
 
-    if (p.length >= 6) {
+    if (value.length >= 6) {
         text = "Good password length.";
     }
 
     if (
-        p.length >= 10 &&
-        /[A-Z]/.test(p) &&
-        /[0-9]/.test(p)
+        value.length >= 10 &&
+        /[A-Z]/.test(value) &&
+        /[0-9]/.test(value)
     ) {
         text = "Strong password.";
     }
@@ -126,212 +127,279 @@ function updateStrength() {
 // =========================================================
 
 if (password) {
-    password.addEventListener("input", updateStrength);
+    password.addEventListener(
+        "input",
+        updateStrength
+    );
 }
 
 // =========================================================
-// PASSWORD SHOW / HIDE
+// SHOW / HIDE PASSWORD
 // =========================================================
 
 if (toggle && password) {
-    toggle.addEventListener("click", () => {
-        const isPassword = password.type === "password";
+    toggle.addEventListener(
+        "click",
+        () => {
+            const isPassword =
+                password.type === "password";
 
-        password.type = isPassword
-            ? "text"
-            : "password";
+            password.type = isPassword
+                ? "text"
+                : "password";
 
-        const icon = toggle.querySelector("i");
+            const icon =
+                toggle.querySelector("i");
 
-        if (icon) {
-            icon.className = isPassword
-                ? "fas fa-eye-slash"
-                : "fas fa-eye";
+            if (icon) {
+                icon.className = isPassword
+                    ? "fas fa-eye-slash"
+                    : "fas fa-eye";
+            }
+
+            toggle.setAttribute(
+                "aria-label",
+                isPassword
+                    ? "Hide password"
+                    : "Show password"
+            );
         }
-
-        toggle.setAttribute(
-            "aria-label",
-            isPassword
-                ? "Hide password"
-                : "Show password"
-        );
-    });
+    );
 }
 
 // =========================================================
-// REGISTER
+// REGISTER FORM
 // =========================================================
 
 if (form) {
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+    form.addEventListener(
+        "submit",
+        async (event) => {
+            event.preventDefault();
 
-        if (message) {
-            message.hidden = true;
-        }
+            if (message) {
+                message.hidden = true;
+            }
 
-        const name =
-            document.getElementById("name")?.value.trim() || "";
+            const name =
+                document
+                    .getElementById("name")
+                    ?.value
+                    .trim() || "";
 
-        const email =
-            document
-                .getElementById("email")
-                ?.value
-                .trim()
-                .toLowerCase() || "";
+            const email =
+                document
+                    .getElementById("email")
+                    ?.value
+                    .trim()
+                    .toLowerCase() || "";
 
-        const p = password
-            ? password.value
-            : "";
+            const passwordValue =
+                password
+                    ? password.value
+                    : "";
 
-        const c = confirm
-            ? confirm.value
-            : "";
+            const confirmValue =
+                confirmPassword
+                    ? confirmPassword.value
+                    : "";
 
-        // -------------------------------------------------
-        // VALIDATION
-        // -------------------------------------------------
+            // =================================================
+            // VALIDATION
+            // =================================================
 
-        if (name.length < 2) {
-            showMessage(
-                "Please enter your full name."
-            );
-            return;
-        }
-
-        if (
-            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-        ) {
-            showMessage(
-                "Please enter a valid email address."
-            );
-            return;
-        }
-
-        if (p.length < 6) {
-            showMessage(
-                "Password must be at least 6 characters."
-            );
-            return;
-        }
-
-        if (p !== c) {
-            showMessage(
-                "Passwords do not match."
-            );
-            return;
-        }
-
-        // -------------------------------------------------
-        // START LOADING
-        // -------------------------------------------------
-
-        loading(true);
-
-        try {
-            console.log(
-                "📝 ShopHub Registration Starting..."
-            );
-
-            console.log(
-                "🌐 Register API:",
-                API
-            );
-
-            // -------------------------------------------------
-            // API REQUEST
-            // -------------------------------------------------
-
-            const response = await fetch(API, {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    password: p
-                })
-            });
-
-            // -------------------------------------------------
-            // READ RESPONSE
-            // -------------------------------------------------
-
-            const data = await response
-                .json()
-                .catch(() => ({}));
-
-            console.log(
-                "📡 Registration Response:",
-                data
-            );
-
-            // -------------------------------------------------
-            // API ERROR
-            // -------------------------------------------------
+            if (name.length < 2) {
+                showMessage(
+                    "Please enter your full name."
+                );
+                return;
+            }
 
             if (
-                !response.ok ||
-                !data.success
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                    email
+                )
             ) {
-                throw new Error(
-                    data.message ||
-                    "Registration failed."
+                showMessage(
+                    "Please enter a valid email address."
                 );
+                return;
             }
 
-            // -------------------------------------------------
-            // SAVE AUTH
-            // -------------------------------------------------
-
-            const saved = saveAuth(data);
-
-            if (!saved) {
-                throw new Error(
-                    "Account created, but login session could not be saved."
+            if (passwordValue.length < 6) {
+                showMessage(
+                    "Password must be at least 6 characters."
                 );
+                return;
             }
 
-            // -------------------------------------------------
-            // SUCCESS
-            // -------------------------------------------------
+            if (
+                passwordValue !==
+                confirmValue
+            ) {
+                showMessage(
+                    "Passwords do not match."
+                );
+                return;
+            }
 
-            showMessage(
-                "Account created successfully. Redirecting to ShopHub...",
-                "success"
-            );
+            // =================================================
+            // START LOADING
+            // =================================================
 
-            console.log(
-                "✅ Registration Successful"
-            );
+            loading(true);
 
-            // -------------------------------------------------
-            // REDIRECT
-            // -------------------------------------------------
+            try {
+                console.log(
+                    "ShopHub Registration Starting..."
+                );
 
-            setTimeout(() => {
-                window.location.href =
-                    "../shop/index.html";
-            }, 700);
+                console.log(
+                    "Register API:",
+                    API
+                );
 
-        } catch (error) {
-            console.error(
-                "❌ Registration Error:",
-                error
-            );
+                // =================================================
+                // API REQUEST
+                // =================================================
 
-            showMessage(
-                error.message ||
-                "Unable to create account."
-            );
+                const response =
+                    await fetch(
+                        API,
+                        {
+                            method: "POST",
 
-        } finally {
-            loading(false);
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+                                name: name,
+                                email: email,
+                                password:
+                                    passwordValue
+                            })
+                        }
+                    );
+
+                // =================================================
+                // READ SERVER RESPONSE
+                // =================================================
+
+                const responseText =
+                    await response.text();
+
+                console.log(
+                    "HTTP Status:",
+                    response.status
+                );
+
+                console.log(
+                    "Raw Server Response:",
+                    responseText
+                );
+
+                let data = {};
+
+                try {
+                    data =
+                        responseText
+                            ? JSON.parse(
+                                  responseText
+                              )
+                            : {};
+                } catch (parseError) {
+                    console.error(
+                        "JSON Parse Error:",
+                        parseError
+                    );
+                }
+
+                console.log(
+                    "Parsed Registration Response:",
+                    data
+                );
+
+                // =================================================
+                // HANDLE API ERROR
+                // =================================================
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+                    console.error(
+                        "Backend Registration Error:",
+                        {
+                            status:
+                                response.status,
+                            message:
+                                data.message,
+                            error:
+                                data.error
+                        }
+                    );
+
+                    throw new Error(
+                        data.error ||
+                        data.message ||
+                        `Registration failed with status ${response.status}.`
+                    );
+                }
+
+                // =================================================
+                // SAVE LOGIN SESSION
+                // =================================================
+
+                const saved =
+                    saveAuth(data);
+
+                if (!saved) {
+                    throw new Error(
+                        "Account created, but login session could not be saved."
+                    );
+                }
+
+                // =================================================
+                // SUCCESS
+                // =================================================
+
+                showMessage(
+                    "Account created successfully. Redirecting...",
+                    "success"
+                );
+
+                console.log(
+                    "Registration Successful"
+                );
+
+                // =================================================
+                // REDIRECT TO SHOP
+                // =================================================
+
+                setTimeout(
+                    () => {
+                        window.location.href =
+                            "../shop/index.html";
+                    },
+                    700
+                );
+            } catch (error) {
+                console.error(
+                    "Registration Error:",
+                    error
+                );
+
+                showMessage(
+                    error.message ||
+                    "Unable to create account."
+                );
+            } finally {
+                loading(false);
+            }
         }
-    });
+    );
 }
 
 // =========================================================
@@ -341,10 +409,10 @@ if (form) {
 updateStrength();
 
 console.log(
-    "🚀 ShopHub Register Page Ready"
+    "ShopHub Register Page Ready"
 );
 
 console.log(
-    "🌐 Backend:",
+    "Backend:",
     API_BASE_URL
 );
