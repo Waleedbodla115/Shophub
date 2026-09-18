@@ -1,3 +1,4 @@
+
 "use strict";
 
 /* =========================================================
@@ -11,8 +12,14 @@
    CONFIGURATION
 ========================================================= */
 
-const ADMIN_API_BASE = "http://localhost:5000";
-const ADMIN_API_URL = `${ADMIN_API_BASE}/api`;
+const ADMIN_API_BASE =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000"
+        : "https://shophub-bice.vercel.app";
+
+const ADMIN_API_URL =
+    `${ADMIN_API_BASE}/api`;
 
 const ORDERS_KEY = "orders";
 const THEME_KEY = "theme";
@@ -182,8 +189,6 @@ function getOrderTotal(order) {
     }
 
 
-    /* summary.total */
-
     if (
         order.summary &&
         order.summary.total !== undefined &&
@@ -200,8 +205,6 @@ function getOrderTotal(order) {
     }
 
 
-    /* total */
-
     if (
         order.total !== undefined &&
         order.total !== null
@@ -217,8 +220,6 @@ function getOrderTotal(order) {
     }
 
 
-    /* amount */
-
     if (
         order.amount !== undefined &&
         order.amount !== null
@@ -233,8 +234,6 @@ function getOrderTotal(order) {
         }
     }
 
-
-    /* items calculation */
 
     if (Array.isArray(order.items)) {
 
@@ -279,8 +278,6 @@ function getCustomerName(order) {
     }
 
 
-    /* customer.fullName */
-
     if (
         order.customer &&
         order.customer.fullName
@@ -289,8 +286,6 @@ function getCustomerName(order) {
         return order.customer.fullName;
     }
 
-
-    /* customer.name */
 
     if (
         order.customer &&
@@ -301,8 +296,6 @@ function getCustomerName(order) {
     }
 
 
-    /* user name */
-
     if (
         order.user &&
         order.user.name
@@ -312,15 +305,11 @@ function getCustomerName(order) {
     }
 
 
-    /* direct customerName */
-
     if (order.customerName) {
 
         return order.customerName;
     }
 
-
-    /* direct name */
 
     if (order.name) {
 
@@ -344,15 +333,11 @@ function getOrderId(order) {
     }
 
 
-    /* Your custom orderId */
-
     if (order.orderId) {
 
         return String(order.orderId);
     }
 
-
-    /* orderNumber */
 
     if (order.orderNumber) {
 
@@ -360,23 +345,17 @@ function getOrderId(order) {
     }
 
 
-    /* orderNo */
-
     if (order.orderNo) {
 
         return String(order.orderNo);
     }
 
 
-    /* MongoDB _id */
-
     if (order._id) {
 
         return `#${String(order._id).slice(-8).toUpperCase()}`;
     }
 
-
-    /* MongoDB id */
 
     if (order.id) {
 
@@ -578,7 +557,11 @@ async function loadAdminOrdersFromAPI() {
         getAdminUser();
 
 
-    if (!token || !user || user.isAdmin !== true) {
+    if (
+        !token ||
+        !user ||
+        user.isAdmin !== true
+    ) {
 
         console.warn(
             "⚠️ Admin authentication not found."
@@ -612,10 +595,6 @@ async function loadAdminOrdersFromAPI() {
             );
 
 
-        /* -------------------------------------------------
-           UNAUTHORIZED
-        ------------------------------------------------- */
-
         if (response.status === 401) {
 
             console.error(
@@ -626,10 +605,6 @@ async function loadAdminOrdersFromAPI() {
         }
 
 
-        /* -------------------------------------------------
-           FORBIDDEN
-        ------------------------------------------------- */
-
         if (response.status === 403) {
 
             console.error(
@@ -639,10 +614,6 @@ async function loadAdminOrdersFromAPI() {
             return false;
         }
 
-
-        /* -------------------------------------------------
-           READ RESPONSE
-        ------------------------------------------------- */
 
         let data = {};
 
@@ -667,15 +638,12 @@ async function loadAdminOrdersFromAPI() {
         );
 
 
-        /* -------------------------------------------------
-           CHECK RESPONSE
-        ------------------------------------------------- */
-
         if (!response.ok) {
 
             console.error(
                 "❌ Orders API error:",
-                data.message || response.statusText
+                data.message ||
+                response.statusText
             );
 
             return false;
@@ -692,10 +660,6 @@ async function loadAdminOrdersFromAPI() {
             return false;
         }
 
-
-        /* -------------------------------------------------
-           SUPPORT DIFFERENT API FORMATS
-        ------------------------------------------------- */
 
         let apiOrders = [];
 
@@ -720,10 +684,6 @@ async function loadAdminOrdersFromAPI() {
         orders =
             apiOrders;
 
-
-        /* -------------------------------------------------
-           SAVE FRESH API DATA LOCALLY
-        ------------------------------------------------- */
 
         saveOrdersToLocalStorage();
 
@@ -814,10 +774,6 @@ function updateStatistics() {
         ).length;
 
 
-    /* -------------------------------------------------
-       MAIN CARDS
-    ------------------------------------------------- */
-
     if (totalOrdersElement) {
 
         totalOrdersElement.textContent =
@@ -845,10 +801,6 @@ function updateStatistics() {
             delivered;
     }
 
-
-    /* -------------------------------------------------
-       STATUS CARDS
-    ------------------------------------------------- */
 
     if (statusPendingElement) {
 
@@ -902,10 +854,6 @@ function renderRecentOrders() {
     }
 
 
-    /* -------------------------------------------------
-       NO ORDERS
-    ------------------------------------------------- */
-
     if (!orders.length) {
 
         recentOrdersElement.innerHTML = `
@@ -930,10 +878,6 @@ function renderRecentOrders() {
     }
 
 
-    /* -------------------------------------------------
-       SORT LATEST FIRST
-    ------------------------------------------------- */
-
     const recentOrders =
         [...orders]
             .sort(
@@ -946,10 +890,6 @@ function renderRecentOrders() {
 
     recentOrdersElement.innerHTML = "";
 
-
-    /* -------------------------------------------------
-       RENDER
-    ------------------------------------------------- */
 
     recentOrders.forEach(order => {
 
@@ -1066,17 +1006,9 @@ async function refreshDashboard() {
 
     try {
 
-        /* -------------------------------------------------
-           TRY BACKEND FIRST
-        ------------------------------------------------- */
-
         const loadedFromAPI =
             await loadAdminOrdersFromAPI();
 
-
-        /* -------------------------------------------------
-           FALLBACK TO LOCAL STORAGE
-        ------------------------------------------------- */
 
         if (!loadedFromAPI) {
 
@@ -1088,10 +1020,6 @@ async function refreshDashboard() {
 
         }
 
-
-        /* -------------------------------------------------
-           UPDATE UI
-        ------------------------------------------------- */
 
         updateStatistics();
 
@@ -1225,8 +1153,6 @@ async function updateAdminOrderStatusAPI(
             data
         );
 
-
-        /* Refresh dashboard */
 
         await refreshDashboard();
 
@@ -1418,7 +1344,6 @@ function setupStorageListener() {
 
 /* =========================================================
    AUTO REFRESH
-   Refresh dashboard every 30 seconds.
 ========================================================= */
 
 function setupAutoRefresh() {
@@ -1472,6 +1397,12 @@ function logAdminState() {
         "📊 Total Orders:",
         orders.length
     );
+
+
+    console.log(
+        "🌐 Admin API:",
+        ADMIN_API_BASE
+    );
 }
 
 
@@ -1521,13 +1452,29 @@ let allAdminProducts = [];
 
 async function fetchAdminProducts() {
 
-    const response = await fetch(`${ADMIN_API_URL}/products`);
+    const response =
+        await fetch(
+            `${ADMIN_API_URL}/products`
+        );
 
-    const data = await response.json().catch(() => ({}));
 
-    if (!response.ok || data.success !== true) {
-        throw new Error(data.message || "Failed to load products.");
+    const data =
+        await response
+            .json()
+            .catch(() => ({}));
+
+
+    if (
+        !response.ok ||
+        data.success !== true
+    ) {
+
+        throw new Error(
+            data.message ||
+            "Failed to load products."
+        );
     }
+
 
     return data.products || [];
 }
@@ -1535,82 +1482,185 @@ async function fetchAdminProducts() {
 
 function renderProductsTable() {
 
-    const tbody = document.getElementById("productsTableBody");
+    const tbody =
+        document.getElementById(
+            "productsTableBody"
+        );
+
 
     if (!tbody) {
+
         return;
     }
+
 
     if (allAdminProducts.length === 0) {
 
         tbody.innerHTML = `
             <tr class="products-empty-row">
-                <td colspan="6">No products yet. Click "Add Product" to create one.</td>
+                <td colspan="6">
+                    No products yet.
+                    Click "Add Product" to create one.
+                </td>
             </tr>
         `;
 
         return;
     }
 
-    tbody.innerHTML = allAdminProducts.map((product) => {
 
-        const id = product._id || product.id;
-        const price = Number(product.price) || 0;
-        const stock = Number(product.stock) || 0;
-        const rating = Number(product.rating) || 0;
-        const stockClass = stock <= 0 ? "product-stock-low" : "";
-        const imageSrc = product.image || "";
+    tbody.innerHTML =
+        allAdminProducts
+            .map(product => {
 
-        return `
-            <tr data-product-id="${escapeHTML(id)}">
-                <td>
-                    <div class="product-cell">
-                        ${imageSrc ? `<img src="${escapeHTML(imageSrc)}" alt="${escapeHTML(product.name)}" onerror="this.style.display='none';">` : ""}
-                        <span class="product-cell-name">${escapeHTML(product.name)}</span>
-                    </div>
-                </td>
-                <td>${escapeHTML(product.category)}</td>
-                <td>${formatCurrency(price)}</td>
-                <td class="${stockClass}">${stock}</td>
-                <td>${rating.toFixed(1)}</td>
-                <td>
-                    <div class="product-row-actions">
-                        <button type="button" class="edit-product-btn" data-id="${escapeHTML(id)}" aria-label="Edit">
-                            <i class="fas fa-pen"></i>
-                        </button>
-                        <button type="button" class="delete-product-btn" data-id="${escapeHTML(id)}" aria-label="Delete">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            </tr>
-        `;
+                const id =
+                    product._id ||
+                    product.id;
 
-    }).join("");
+                const price =
+                    Number(product.price) ||
+                    0;
+
+                const stock =
+                    Number(product.stock) ||
+                    0;
+
+                const rating =
+                    Number(product.rating) ||
+                    0;
+
+                const stockClass =
+                    stock <= 0
+                        ? "product-stock-low"
+                        : "";
+
+                const imageSrc =
+                    product.image ||
+                    "";
+
+
+                return `
+                    <tr data-product-id="${escapeHTML(id)}">
+
+                        <td>
+
+                            <div class="product-cell">
+
+                                ${
+                                    imageSrc
+                                        ? `
+                                            <img
+                                                src="${escapeHTML(imageSrc)}"
+                                                alt="${escapeHTML(product.name)}"
+                                                onerror="this.style.display='none';"
+                                            >
+                                          `
+                                        : ""
+                                }
+
+                                <span class="product-cell-name">
+                                    ${escapeHTML(product.name)}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+                            ${escapeHTML(product.category)}
+                        </td>
+
+
+                        <td>
+                            ${formatCurrency(price)}
+                        </td>
+
+
+                        <td class="${stockClass}">
+                            ${stock}
+                        </td>
+
+
+                        <td>
+                            ${rating.toFixed(1)}
+                        </td>
+
+
+                        <td>
+
+                            <div class="product-row-actions">
+
+                                <button
+                                    type="button"
+                                    class="edit-product-btn"
+                                    data-id="${escapeHTML(id)}"
+                                    aria-label="Edit"
+                                >
+
+                                    <i class="fas fa-pen"></i>
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="delete-product-btn"
+                                    data-id="${escapeHTML(id)}"
+                                    aria-label="Delete"
+                                >
+
+                                    <i class="fas fa-trash"></i>
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                `;
+
+            })
+            .join("");
 }
 
 
 async function loadAdminProducts() {
 
-    const tbody = document.getElementById("productsTableBody");
+    const tbody =
+        document.getElementById(
+            "productsTableBody"
+        );
+
 
     try {
 
-        allAdminProducts = await fetchAdminProducts();
+        allAdminProducts =
+            await fetchAdminProducts();
+
 
         renderProductsTable();
 
     } catch (error) {
 
-        console.error("❌ Load products error:", error);
+        console.error(
+            "❌ Load products error:",
+            error
+        );
+
 
         if (tbody) {
 
             tbody.innerHTML = `
                 <tr class="products-error-row">
-                    <td colspan="6">Couldn't load products. Is the backend running?</td>
+                    <td colspan="6">
+                        Couldn't load products.
+                        Is the backend running?
+                    </td>
                 </tr>
             `;
+
         }
     }
 }
@@ -1618,40 +1668,121 @@ async function loadAdminProducts() {
 
 function openProductModal(product) {
 
-    const overlay = document.getElementById("productModalOverlay");
-    const title = document.getElementById("productModalTitle");
-    const errorBox = document.getElementById("productFormError");
+    const overlay =
+        document.getElementById(
+            "productModalOverlay"
+        );
+
+    const title =
+        document.getElementById(
+            "productModalTitle"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "productFormError"
+        );
+
 
     if (!overlay) {
+
         return;
     }
 
-    document.getElementById("productId").value = product?._id || product?.id || "";
-    document.getElementById("productName").value = product?.name || "";
-    document.getElementById("productCategory").value = product?.category || "men";
-    document.getElementById("productPrice").value = product?.price ?? "";
-    document.getElementById("productStock").value = product?.stock ?? 0;
-    document.getElementById("productImage").value = product?.image || "";
-    document.getElementById("productDescription").value = product?.description || "";
-    document.getElementById("productRating").value = product?.rating ?? 0;
 
-    title.textContent = product ? "Edit Product" : "Add Product";
+    document.getElementById(
+        "productId"
+    ).value =
+        product?._id ||
+        product?.id ||
+        "";
 
-    if (errorBox) {
-        errorBox.style.display = "none";
-        errorBox.textContent = "";
+
+    document.getElementById(
+        "productName"
+    ).value =
+        product?.name ||
+        "";
+
+
+    document.getElementById(
+        "productCategory"
+    ).value =
+        product?.category ||
+        "men";
+
+
+    document.getElementById(
+        "productPrice"
+    ).value =
+        product?.price ??
+        "";
+
+
+    document.getElementById(
+        "productStock"
+    ).value =
+        product?.stock ??
+        0;
+
+
+    document.getElementById(
+        "productImage"
+    ).value =
+        product?.image ||
+        "";
+
+
+    document.getElementById(
+        "productDescription"
+    ).value =
+        product?.description ||
+        "";
+
+
+    document.getElementById(
+        "productRating"
+    ).value =
+        product?.rating ??
+        0;
+
+
+    if (title) {
+
+        title.textContent =
+            product
+                ? "Edit Product"
+                : "Add Product";
     }
 
-    overlay.style.display = "flex";
+
+    if (errorBox) {
+
+        errorBox.style.display =
+            "none";
+
+        errorBox.textContent =
+            "";
+    }
+
+
+    overlay.style.display =
+        "flex";
 }
 
 
 function closeProductModal() {
 
-    const overlay = document.getElementById("productModalOverlay");
+    const overlay =
+        document.getElementById(
+            "productModalOverlay"
+        );
+
 
     if (overlay) {
-        overlay.style.display = "none";
+
+        overlay.style.display =
+            "none";
     }
 }
 
@@ -1660,168 +1791,414 @@ async function saveProduct(event) {
 
     event.preventDefault();
 
-    const errorBox = document.getElementById("productFormError");
-    const saveBtn = document.getElementById("productSaveBtn");
-    const token = getAdminToken();
+
+    const errorBox =
+        document.getElementById(
+            "productFormError"
+        );
+
+    const saveBtn =
+        document.getElementById(
+            "productSaveBtn"
+        );
+
+    const token =
+        getAdminToken();
+
 
     if (!token) {
-        window.location.href = "../admin-login/index.html";
+
+        window.location.href =
+            "../admin-login/index.html";
+
         return;
     }
 
-    const id = document.getElementById("productId").value;
+
+    const id =
+        document.getElementById(
+            "productId"
+        ).value;
+
 
     const payload = {
-        name: document.getElementById("productName").value.trim(),
-        category: document.getElementById("productCategory").value,
-        price: Number(document.getElementById("productPrice").value),
-        stock: Number(document.getElementById("productStock").value),
-        image: document.getElementById("productImage").value.trim(),
-        description: document.getElementById("productDescription").value.trim(),
-        rating: Number(document.getElementById("productRating").value) || 0
+
+        name:
+            document
+                .getElementById(
+                    "productName"
+                )
+                .value
+                .trim(),
+
+        category:
+            document.getElementById(
+                "productCategory"
+            ).value,
+
+        price:
+            Number(
+                document.getElementById(
+                    "productPrice"
+                ).value
+            ),
+
+        stock:
+            Number(
+                document.getElementById(
+                    "productStock"
+                ).value
+            ),
+
+        image:
+            document
+                .getElementById(
+                    "productImage"
+                )
+                .value
+                .trim(),
+
+        description:
+            document
+                .getElementById(
+                    "productDescription"
+                )
+                .value
+                .trim(),
+
+        rating:
+            Number(
+                document.getElementById(
+                    "productRating"
+                ).value
+            ) || 0
+
     };
 
-    const url = id
-        ? `${ADMIN_API_URL}/products/${encodeURIComponent(id)}`
-        : `${ADMIN_API_URL}/products`;
 
-    const method = id ? "PUT" : "POST";
+    const url =
+        id
+            ? `${ADMIN_API_URL}/products/${encodeURIComponent(id)}`
+            : `${ADMIN_API_URL}/products`;
+
+
+    const method =
+        id
+            ? "PUT"
+            : "POST";
+
 
     try {
 
-        saveBtn.disabled = true;
-
-        const response = await fetch(url, {
-            method: method,
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            body: JSON.stringify(payload)
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        if (!response.ok || data.success !== true) {
-            throw new Error(data.message || "Failed to save product.");
+        if (saveBtn) {
+            saveBtn.disabled = true;
         }
 
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method: method,
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Authorization":
+                            `Bearer ${token}`
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            payload
+                        )
+                }
+            );
+
+
+        const data =
+            await response
+                .json()
+                .catch(() => ({}));
+
+
+        if (
+            !response.ok ||
+            data.success !== true
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Failed to save product."
+            );
+        }
+
+
         closeProductModal();
+
 
         await loadAdminProducts();
 
     } catch (error) {
 
-        console.error("❌ Save product error:", error);
+        console.error(
+            "❌ Save product error:",
+            error
+        );
+
 
         if (errorBox) {
-            errorBox.textContent = error.message || "Failed to save product.";
-            errorBox.style.display = "block";
+
+            errorBox.textContent =
+                error.message ||
+                "Failed to save product.";
+
+            errorBox.style.display =
+                "block";
         }
 
     } finally {
 
-        saveBtn.disabled = false;
+        if (saveBtn) {
+            saveBtn.disabled = false;
+        }
+
     }
 }
 
 
 async function deleteProduct(id) {
 
-    const token = getAdminToken();
+    const token =
+        getAdminToken();
+
 
     if (!token) {
-        window.location.href = "../admin-login/index.html";
+
+        window.location.href =
+            "../admin-login/index.html";
+
         return;
     }
 
-    if (!window.confirm("Delete this product? This cannot be undone.")) {
+
+    if (
+        !window.confirm(
+            "Delete this product? This cannot be undone."
+        )
+    ) {
+
         return;
     }
+
 
     try {
 
-        const response = await fetch(`${ADMIN_API_URL}/products/${encodeURIComponent(id)}`, {
-            method: "DELETE",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        });
+        const response =
+            await fetch(
+                `${ADMIN_API_URL}/products/${encodeURIComponent(id)}`,
+                {
+                    method: "DELETE",
 
-        const data = await response.json().catch(() => ({}));
+                    headers: {
+                        "Authorization":
+                            `Bearer ${token}`
+                    }
+                }
+            );
 
-        if (!response.ok || data.success !== true) {
-            throw new Error(data.message || "Failed to delete product.");
+
+        const data =
+            await response
+                .json()
+                .catch(() => ({}));
+
+
+        if (
+            !response.ok ||
+            data.success !== true
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Failed to delete product."
+            );
         }
+
 
         await loadAdminProducts();
 
     } catch (error) {
 
-        console.error("❌ Delete product error:", error);
+        console.error(
+            "❌ Delete product error:",
+            error
+        );
 
-        alert(error.message || "Failed to delete product.");
+
+        alert(
+            error.message ||
+            "Failed to delete product."
+        );
     }
 }
 
 
 function setupProductManagement() {
 
-    const addBtn = document.getElementById("addProductBtn");
-    const overlay = document.getElementById("productModalOverlay");
-    const closeBtn = document.getElementById("productModalClose");
-    const cancelBtn = document.getElementById("productCancelBtn");
-    const form = document.getElementById("productForm");
-    const tbody = document.getElementById("productsTableBody");
+    const addBtn =
+        document.getElementById(
+            "addProductBtn"
+        );
+
+    const overlay =
+        document.getElementById(
+            "productModalOverlay"
+        );
+
+    const closeBtn =
+        document.getElementById(
+            "productModalClose"
+        );
+
+    const cancelBtn =
+        document.getElementById(
+            "productCancelBtn"
+        );
+
+    const form =
+        document.getElementById(
+            "productForm"
+        );
+
+    const tbody =
+        document.getElementById(
+            "productsTableBody"
+        );
+
 
     if (addBtn) {
-        addBtn.addEventListener("click", () => openProductModal(null));
+
+        addBtn.addEventListener(
+            "click",
+            () =>
+                openProductModal(null)
+        );
     }
+
 
     if (closeBtn) {
-        closeBtn.addEventListener("click", closeProductModal);
+
+        closeBtn.addEventListener(
+            "click",
+            closeProductModal
+        );
     }
+
 
     if (cancelBtn) {
-        cancelBtn.addEventListener("click", closeProductModal);
+
+        cancelBtn.addEventListener(
+            "click",
+            closeProductModal
+        );
     }
+
 
     if (overlay) {
-        overlay.addEventListener("click", (event) => {
-            if (event.target === overlay) {
-                closeProductModal();
+
+        overlay.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target === overlay
+                ) {
+
+                    closeProductModal();
+                }
+
             }
-        });
+        );
     }
 
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && overlay && overlay.style.display === "flex") {
-            closeProductModal();
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape" &&
+                overlay &&
+                overlay.style.display === "flex"
+            ) {
+
+                closeProductModal();
+
+            }
+
         }
-    });
+    );
+
 
     if (form) {
-        form.addEventListener("submit", saveProduct);
+
+        form.addEventListener(
+            "submit",
+            saveProduct
+        );
     }
+
 
     if (tbody) {
 
-        tbody.addEventListener("click", (event) => {
+        tbody.addEventListener(
+            "click",
+            event => {
 
-            const editBtn = event.target.closest(".edit-product-btn");
-            const deleteBtn = event.target.closest(".delete-product-btn");
+                const editBtn =
+                    event.target.closest(
+                        ".edit-product-btn"
+                    );
 
-            if (editBtn) {
+                const deleteBtn =
+                    event.target.closest(
+                        ".delete-product-btn"
+                    );
 
-                const product = allAdminProducts.find((p) => (p._id || p.id) === editBtn.dataset.id);
 
-                openProductModal(product || null);
+                if (editBtn) {
+
+                    const product =
+                        allAdminProducts.find(
+                            product =>
+                                (
+                                    product._id ||
+                                    product.id
+                                ) ===
+                                editBtn.dataset.id
+                        );
+
+
+                    openProductModal(
+                        product ||
+                        null
+                    );
+                }
+
+
+                if (deleteBtn) {
+
+                    deleteProduct(
+                        deleteBtn.dataset.id
+                    );
+                }
+
             }
-
-            if (deleteBtn) {
-                deleteProduct(deleteBtn.dataset.id);
-            }
-        });
+        );
     }
 }
 
@@ -1846,44 +2223,23 @@ async function initAdmin() {
     setupAutoRefresh();
 
 
-    /* -------------------------------------------------
-       CHECK ADMIN
-    ------------------------------------------------- */
-
     if (!checkAdminAccess()) {
 
         console.warn(
             "⚠️ Admin session missing or invalid."
         );
 
-        /*
-         * Do not redirect immediately.
-         * This makes debugging easier.
-         */
-
         return;
     }
 
 
-    /* -------------------------------------------------
-       LOAD DASHBOARD
-    ------------------------------------------------- */
-
     await refreshDashboard();
 
-
-    /* -------------------------------------------------
-       PRODUCT MANAGEMENT
-    ------------------------------------------------- */
 
     setupProductManagement();
 
     await loadAdminProducts();
 
-
-    /* -------------------------------------------------
-       DEBUG
-    ------------------------------------------------- */
 
     logAdminState();
 
@@ -1912,3 +2268,4 @@ if (
     initAdmin();
 
 }
+

@@ -4,15 +4,22 @@
    SHOPHUB ADMIN LOGIN
 ========================================================= */
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000/api"
+        : "https://shophub-bice.vercel.app/api";
+
 
 /* =========================================================
    ELEMENTS
 ========================================================= */
 
-const loginForm = document.getElementById("adminLoginForm");
+const loginForm =
+    document.getElementById("adminLoginForm");
 
-const emailInput = document.getElementById("email");
+const emailInput =
+    document.getElementById("email");
 
 const passwordInput =
     document.getElementById("password");
@@ -153,7 +160,7 @@ function setLoading(loading) {
 
     /* -----------------------------------------------------
        Spinner
-       
+
        IMPORTANT:
        HTML has #loginSpinner
     ----------------------------------------------------- */

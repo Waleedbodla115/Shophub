@@ -5,23 +5,34 @@
    MongoDB API + Backend Images + Theme + Cart + Products
 ========================================================= */
 
+
 /* =========================================================
    CONFIGURATION
 ========================================================= */
 
-const API_BASE_URL = "http://localhost:5000";
-const PRODUCTS_API = `${API_BASE_URL}/api/products`;
+const API_BASE_URL =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000"
+        : "https://shophub-bice.vercel.app";
+
+const PRODUCTS_API =
+    `${API_BASE_URL}/api/products`;
 
 const CART_KEY = "cart";
+
 const THEME_KEY = "theme";
 
-const IMAGE_BASE_URL = `${API_BASE_URL}/images`;
+const IMAGE_BASE_URL =
+    `${API_BASE_URL}/images`;
+
 
 /* =========================================================
    PRODUCTS STATE
 ========================================================= */
 
 let shopProducts = [];
+
 
 /* =========================================================
    IMAGE FOLDERS
@@ -34,6 +45,7 @@ const IMAGE_FOLDERS = [
     "accessories",
     "electronics"
 ];
+
 
 /* =========================================================
    IMAGE ALIASES
@@ -92,6 +104,7 @@ const IMAGE_ALIASES = {
     "smart watch":
         "electronics/smart watch.jpg",
 
+
     /* ================= ELECTRONICS ================= */
 
     "earbuds.jpg":
@@ -120,6 +133,7 @@ const IMAGE_ALIASES = {
 
     "wireless speakers":
         "electronics/wireless speakers.jpg",
+
 
     /* ================= WOMEN ================= */
 
@@ -159,6 +173,7 @@ const IMAGE_ALIASES = {
     "women,s summer dress":
         "women/women,s summer dress.jpg",
 
+
     /* ================= KIDS ================= */
 
     "kids accesssories.jpg":
@@ -190,6 +205,7 @@ const IMAGE_ALIASES = {
 
     "kids t shirt":
         "kids/kids t shirt.jpg",
+
 
     /* ================= ACCESSORIES ================= */
 
@@ -224,43 +240,60 @@ const IMAGE_ALIASES = {
         "accessories/wallet.jpg"
 };
 
+
 /* =========================================================
    INITIALIZE THEME
 ========================================================= */
 
 function initTheme() {
 
-    const savedTheme = localStorage.getItem(THEME_KEY);
+    const savedTheme =
+        localStorage.getItem(THEME_KEY);
 
     if (savedTheme === "dark") {
-        document.body.classList.add("dark-mode");
+
+        document.body.classList.add(
+            "dark-mode"
+        );
     }
 
-    const themeToggle = document.getElementById("themeToggle");
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
 
     if (!themeToggle) {
         return;
     }
 
-    const icon = themeToggle.querySelector("i");
+    const icon =
+        themeToggle.querySelector("i");
 
     updateThemeIcon(icon);
 
-    themeToggle.addEventListener("click", () => {
+    themeToggle.addEventListener(
+        "click",
+        () => {
 
-        document.body.classList.toggle("dark-mode");
+            document.body.classList.toggle(
+                "dark-mode"
+            );
 
-        const isDark =
-            document.body.classList.contains("dark-mode");
+            const isDark =
+                document.body.classList.contains(
+                    "dark-mode"
+                );
 
-        localStorage.setItem(
-            THEME_KEY,
-            isDark ? "dark" : "light"
-        );
+            localStorage.setItem(
+                THEME_KEY,
+                isDark ? "dark" : "light"
+            );
 
-        updateThemeIcon(icon);
-    });
+            updateThemeIcon(icon);
+        }
+    );
 }
+
 
 /* =========================================================
    UPDATE THEME ICON
@@ -273,12 +306,16 @@ function updateThemeIcon(icon) {
     }
 
     const isDark =
-        document.body.classList.contains("dark-mode");
+        document.body.classList.contains(
+            "dark-mode"
+        );
 
-    icon.className = isDark
-        ? "fas fa-sun"
-        : "fas fa-moon";
+    icon.className =
+        isDark
+            ? "fas fa-sun"
+            : "fas fa-moon";
 }
+
 
 /* =========================================================
    CART
@@ -289,13 +326,16 @@ function getCart() {
     try {
 
         const savedCart =
-            localStorage.getItem(CART_KEY);
+            localStorage.getItem(
+                CART_KEY
+            );
 
         if (!savedCart) {
             return {};
         }
 
-        const cart = JSON.parse(savedCart);
+        const cart =
+            JSON.parse(savedCart);
 
         if (
             cart &&
@@ -317,6 +357,7 @@ function getCart() {
         return {};
     }
 }
+
 
 /* =========================================================
    SAVE CART
@@ -340,27 +381,33 @@ function saveCart(cart) {
     }
 }
 
+
 /* =========================================================
    UPDATE CART COUNT
 ========================================================= */
 
 function updateCartCount() {
 
-    const cart = getCart();
+    const cart =
+        getCart();
 
     let totalItems = 0;
 
-    Object.values(cart).forEach(quantity => {
+    Object.values(cart).forEach(
+        quantity => {
 
-        const qty = Number(quantity);
+            const qty =
+                Number(quantity);
 
-        if (
-            Number.isFinite(qty) &&
-            qty > 0
-        ) {
-            totalItems += qty;
+            if (
+                Number.isFinite(qty) &&
+                qty > 0
+            ) {
+
+                totalItems += qty;
+            }
         }
-    });
+    );
 
     document
         .querySelectorAll(".cart-count")
@@ -371,11 +418,14 @@ function updateCartCount() {
         });
 }
 
+
 /* =========================================================
    GLOBAL CART COUNT FUNCTION
 ========================================================= */
 
-window.updateCartCountBadges = updateCartCount;
+window.updateCartCountBadges =
+    updateCartCount;
+
 
 /* =========================================================
    CLEAR INVALID CART
@@ -386,7 +436,9 @@ function clearInvalidCart() {
     try {
 
         const savedCart =
-            localStorage.getItem(CART_KEY);
+            localStorage.getItem(
+                CART_KEY
+            );
 
         if (!savedCart) {
             return;
@@ -401,14 +453,19 @@ function clearInvalidCart() {
             Array.isArray(parsed)
         ) {
 
-            localStorage.removeItem(CART_KEY);
+            localStorage.removeItem(
+                CART_KEY
+            );
         }
 
     } catch (error) {
 
-        localStorage.removeItem(CART_KEY);
+        localStorage.removeItem(
+            CART_KEY
+        );
     }
 }
+
 
 /* =========================================================
    TOAST
@@ -417,34 +474,55 @@ function clearInvalidCart() {
 function showToast(message) {
 
     let toast =
-        document.getElementById("toast");
+        document.getElementById(
+            "toast"
+        );
 
     if (!toast) {
 
         toast =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         toast.id = "toast";
-        toast.className = "shop-toast";
 
-        document.body.appendChild(toast);
+        toast.className =
+            "shop-toast";
+
+        document.body.appendChild(
+            toast
+        );
     }
 
-    toast.classList.add("shop-toast");
+    toast.classList.add(
+        "shop-toast"
+    );
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
-    toast.classList.add("show");
+    toast.classList.add(
+        "show"
+    );
 
-    clearTimeout(window.shopToastTimer);
+    clearTimeout(
+        window.shopToastTimer
+    );
 
     window.shopToastTimer =
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            toast.classList.remove("show");
+                toast.classList.remove(
+                    "show"
+                );
 
-        }, 2000);
+            },
+            2000
+        );
 }
+
 
 /* =========================================================
    NORMALIZE IMAGE NAME
@@ -467,6 +545,7 @@ function normalizeImageName(imagePath) {
         value.startsWith("http://") ||
         value.startsWith("https://")
     ) {
+
         return value;
     }
 
@@ -478,12 +557,16 @@ function normalizeImageName(imagePath) {
     /* Remove images/ */
 
     value =
-        value.replace(/^images\//i, "");
+        value.replace(
+            /^images\//i,
+            ""
+        );
 
     /* Lowercase */
 
     return value.toLowerCase();
 }
+
 
 /* =========================================================
    BUILD BACKEND IMAGE URL
@@ -498,16 +581,23 @@ function buildBackendImageUrl(path) {
     return `${IMAGE_BASE_URL}/${path
         .split("/")
         .filter(Boolean)
-        .map(part => encodeURIComponent(part))
+        .map(
+            part =>
+                encodeURIComponent(part)
+        )
         .join("/")}`;
 }
+
 
 /* =========================================================
    GET IMAGE URL
    SMART BACKEND IMAGE RESOLVER
 ========================================================= */
 
-function getImageUrl(imagePath, category = "") {
+function getImageUrl(
+    imagePath,
+    category = ""
+) {
 
     if (!imagePath) {
         return "";
@@ -522,40 +612,55 @@ function getImageUrl(imagePath, category = "") {
         rawPath.startsWith("http://") ||
         rawPath.startsWith("https://")
     ) {
+
         return rawPath;
     }
 
     /* Normalize Windows slashes */
 
     rawPath =
-        rawPath.replace(/\\/g, "/");
+        rawPath.replace(
+            /\\/g,
+            "/"
+        );
 
     /* Remove leading slash */
 
     let cleanPath =
-        rawPath.replace(/^\/+/, "");
+        rawPath.replace(
+            /^\/+/,
+            ""
+        );
 
     /* Remove images/ */
 
     cleanPath =
-        cleanPath.replace(/^images\//i, "");
+        cleanPath.replace(
+            /^images\//i,
+            ""
+        );
 
     /* Remove duplicate slashes */
 
     cleanPath =
-        cleanPath.replace(/\/+/g, "/");
+        cleanPath.replace(
+            /\/+/g,
+            "/"
+        );
 
     /* Already contains category folder */
 
     const hasCategoryFolder =
-        IMAGE_FOLDERS.some(folder => {
+        IMAGE_FOLDERS.some(
+            folder => {
 
-            return cleanPath
-                .toLowerCase()
-                .startsWith(
-                    `${folder.toLowerCase()}/`
-                );
-        });
+                return cleanPath
+                    .toLowerCase()
+                    .startsWith(
+                        `${folder.toLowerCase()}/`
+                    );
+            }
+        );
 
     if (hasCategoryFolder) {
 
@@ -567,10 +672,14 @@ function getImageUrl(imagePath, category = "") {
     /* Check aliases */
 
     const normalizedName =
-        normalizeImageName(cleanPath);
+        normalizeImageName(
+            cleanPath
+        );
 
     const alias =
-        IMAGE_ALIASES[normalizedName];
+        IMAGE_ALIASES[
+            normalizedName
+        ];
 
     if (alias) {
 
@@ -578,7 +687,9 @@ function getImageUrl(imagePath, category = "") {
             `🖼️ Image mapped: ${rawPath} → ${alias}`
         );
 
-        return buildBackendImageUrl(alias);
+        return buildBackendImageUrl(
+            alias
+        );
     }
 
     /* Try product category */
@@ -605,6 +716,7 @@ function getImageUrl(imagePath, category = "") {
         cleanPath
     );
 }
+
 
 /* =========================================================
    FETCH PRODUCTS FROM MONGODB
@@ -636,7 +748,9 @@ async function fetchProducts() {
         );
 
         const response =
-            await fetch(PRODUCTS_API);
+            await fetch(
+                PRODUCTS_API
+            );
 
         if (!response.ok) {
 
@@ -662,7 +776,9 @@ async function fetchProducts() {
         }
 
         shopProducts =
-            Array.isArray(data.products)
+            Array.isArray(
+                data.products
+            )
                 ? data.products
                 : [];
 
@@ -694,8 +810,7 @@ async function fetchProducts() {
                         <br>
 
                         <small>
-                            Please make sure the ShopHub
-                            backend is running on port 5000.
+                            Please check the ShopHub backend connection.
                         </small>
 
                     </div>
@@ -706,6 +821,7 @@ async function fetchProducts() {
         }
     }
 }
+
 
 /* =========================================================
    RENDER ALL PRODUCTS
@@ -734,7 +850,9 @@ function renderAllProducts() {
             <div class="col-12">
 
                 <div class="alert alert-info text-center">
+
                     No products found.
+
                 </div>
 
             </div>
@@ -746,159 +864,166 @@ function renderAllProducts() {
 
     grid.innerHTML = "";
 
-    shopProducts.forEach(product => {
+    shopProducts.forEach(
+        product => {
 
-        const col =
-            document.createElement("div");
+            const col =
+                document.createElement(
+                    "div"
+                );
 
-        col.className =
-            "col-6 col-md-4 col-lg-3";
+            col.className =
+                "col-6 col-md-4 col-lg-3";
 
-        /* IMAGE */
+            /* IMAGE */
 
-        const imageUrl =
-            getImageUrl(
+            const imageUrl =
+                getImageUrl(
+                    product.image,
+                    product.category
+                );
+
+            /* PRODUCT DATA */
+
+            const price =
+                Number(product.price) || 0;
+
+            const rating =
+                Number(product.rating) || 0;
+
+            const category =
+                escapeHtml(
+                    product.category
+                );
+
+            const name =
+                escapeHtml(
+                    product.name
+                );
+
+            const productId =
+                String(
+                    product._id || ""
+                );
+
+            console.log(
+                `🖼️ ${product.name}:`,
                 product.image,
-                product.category
+                "→",
+                imageUrl
             );
 
-        /* PRODUCT DATA */
+            /* PRODUCT CARD */
 
-        const price =
-            Number(product.price) || 0;
+            col.innerHTML = `
 
-        const rating =
-            Number(product.rating) || 0;
+                <div class="card h-100 shadow-sm product-card">
 
-        const category =
-            escapeHtml(product.category);
+                    <!-- PRODUCT IMAGE -->
 
-        const name =
-            escapeHtml(product.name);
-
-        const productId =
-            String(product._id || "");
-
-        console.log(
-            `🖼️ ${product.name}:`,
-            product.image,
-            "→",
-            imageUrl
-        );
-
-        /* PRODUCT CARD */
-
-        col.innerHTML = `
-
-            <div class="card h-100 shadow-sm product-card">
-
-                <!-- PRODUCT IMAGE -->
-
-                <div
-                    class="product-image-wrapper product-details-link"
-                    data-product-id="${escapeHtml(productId)}"
-                    role="button"
-                    tabindex="0"
-                    title="View product details"
-                >
-
-                    <img
-                        src="${imageUrl}"
-                        class="card-img-top"
-                        alt="${name}"
-                        loading="lazy"
-                        onerror="handleImageError(this)"
-                    >
-
-                </div>
-
-                <!-- PRODUCT BODY -->
-
-                <div class="card-body d-flex flex-column">
-
-                    <!-- CATEGORY -->
-
-                    <span class="text-muted small text-capitalize">
-
-                        ${category}
-
-                    </span>
-
-                    <!-- PRODUCT NAME -->
-
-                    <h6
-                        class="card-title mb-1 product-details-link"
+                    <div
+                        class="product-image-wrapper product-details-link"
                         data-product-id="${escapeHtml(productId)}"
                         role="button"
                         tabindex="0"
                         title="View product details"
                     >
 
-                        ${name}
-
-                    </h6>
-
-                    <!-- RATING -->
-
-                    <div class="product-rating mb-2">
-
-                        ${renderStars(rating)}
-
-                        <small class="text-muted">
-                            (${rating})
-                        </small>
+                        <img
+                            src="${imageUrl}"
+                            class="card-img-top"
+                            alt="${name}"
+                            loading="lazy"
+                            onerror="handleImageError(this)"
+                        >
 
                     </div>
 
-                    <!-- PRICE -->
 
-                    <p class="fw-bold mb-3">
+                    <!-- PRODUCT BODY -->
 
-                        $${price.toFixed(2)}
+                    <div class="card-body d-flex flex-column">
 
-                    </p>
+                        <!-- CATEGORY -->
 
-                    <!-- ACTION BUTTONS -->
+                        <span class="text-muted small text-capitalize">
+                            ${category}
+                        </span>
 
-                    <div class="d-flex gap-2 mt-auto">
 
-                        <!-- VIEW DETAILS -->
+                        <!-- PRODUCT NAME -->
 
-                        <button
-                            type="button"
-                            class="btn btn-outline-dark flex-grow-1 view-details-btn"
+                        <h6
+                            class="card-title mb-1 product-details-link"
                             data-product-id="${escapeHtml(productId)}"
+                            role="button"
+                            tabindex="0"
+                            title="View product details"
                         >
+                            ${name}
+                        </h6>
 
-                            <i class="fas fa-eye"></i>
-                            View
 
-                        </button>
+                        <!-- RATING -->
 
-                        <!-- ADD TO CART -->
+                        <div class="product-rating mb-2">
 
-                        <button
-                            type="button"
-                            class="btn btn-dark flex-grow-1 add-to-cart-btn"
-                            data-id="${escapeHtml(productId)}"
-                        >
+                            ${renderStars(rating)}
 
-                            <i class="fas fa-cart-plus"></i>
-                            Add
+                            <small class="text-muted">
+                                (${rating})
+                            </small>
 
-                        </button>
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <p class="fw-bold mb-3">
+                            $${price.toFixed(2)}
+                        </p>
+
+
+                        <!-- ACTION BUTTONS -->
+
+                        <div class="d-flex gap-2 mt-auto">
+
+                            <!-- VIEW DETAILS -->
+
+                            <button
+                                type="button"
+                                class="btn btn-outline-dark flex-grow-1 view-details-btn"
+                                data-product-id="${escapeHtml(productId)}"
+                            >
+                                <i class="fas fa-eye"></i>
+                                View
+                            </button>
+
+
+                            <!-- ADD TO CART -->
+
+                            <button
+                                type="button"
+                                class="btn btn-dark flex-grow-1 add-to-cart-btn"
+                                data-id="${escapeHtml(productId)}"
+                            >
+                                <i class="fas fa-cart-plus"></i>
+                                Add
+                            </button>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
-
-        `;
-
-        grid.appendChild(col);
-    });
+            `;
+            
+            grid.appendChild(col);
+        }
+    );
 }
+
 
 /* =========================================================
    STAR RATING
@@ -936,6 +1061,7 @@ function renderStars(rating) {
     return stars;
 }
 
+
 /* =========================================================
    IMAGE ERROR HANDLER
 ========================================================= */
@@ -957,7 +1083,9 @@ function handleImageError(image) {
 
     /* Remove broken image */
 
-    image.removeAttribute("src");
+    image.removeAttribute(
+        "src"
+    );
 
     /* Add fallback class */
 
@@ -965,6 +1093,7 @@ function handleImageError(image) {
         "img-fallback"
     );
 }
+
 
 /* =========================================================
    ESCAPE HTML
@@ -976,16 +1105,33 @@ function escapeHtml(value) {
         value === null ||
         value === undefined
     ) {
+
         return "";
     }
 
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
+
 
 /* =========================================================
    ADD PRODUCT TO CART
@@ -1050,6 +1196,7 @@ function addProductToCart(productId) {
     );
 }
 
+
 /* =========================================================
    ADD TO CART EVENTS
 ========================================================= */
@@ -1099,6 +1246,7 @@ function setupAddToCartEvents() {
     );
 }
 
+
 /* =========================================================
    PRODUCT DETAILS NAVIGATION
 ========================================================= */
@@ -1122,6 +1270,7 @@ function openProductDetails(productId) {
     window.location.href =
         `../product/index.html?id=${encodeURIComponent(productId)}`;
 }
+
 
 /* =========================================================
    PRODUCT DETAILS EVENTS
@@ -1160,6 +1309,7 @@ function setupProductDetailsEvents() {
                     ".add-to-cart-btn"
                 )
             ) {
+
                 return;
             }
 
@@ -1181,6 +1331,7 @@ function setupProductDetailsEvents() {
         }
     );
 
+
     /* KEYBOARD ACCESSIBILITY */
 
     grid.addEventListener(
@@ -1191,6 +1342,7 @@ function setupProductDetailsEvents() {
                 event.key !== "Enter" &&
                 event.key !== " "
             ) {
+
                 return;
             }
 
@@ -1218,6 +1370,7 @@ function setupProductDetailsEvents() {
         }
     );
 }
+
 
 /* =========================================================
    INITIALIZE SHOP PAGE

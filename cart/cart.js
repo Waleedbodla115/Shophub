@@ -9,24 +9,23 @@ const SHIPPING_FEE = 10;
 /*
    Backend image server.
 
-   Product images are stored like:
+   Local:
+   http://localhost:5000
 
-   /images/men/men-jacket.jpg
-   /images/women/women-dress.jpg
-   /images/electronics/Earbuds.jpg
+   Production:
+   https://shophub-bice.vercel.app
 
-   Frontend:
-   5500 / 5501
-
-   Backend:
-   5000
-
-   Therefore images must come from:
-
-   http://localhost:5000/images/...
+   Product images remain:
+   /images/men/...
+   /images/women/...
+   /images/electronics/...
 */
 
-const IMAGE_BASE_URL = "http://localhost:5000";
+const IMAGE_BASE_URL =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000"
+        : "https://shophub-bice.vercel.app";
 
 
 /* =========================================================
@@ -76,7 +75,6 @@ const themeToggle =
 ========================================================= */
 
 function getProductImageUrl(image) {
-
     if (!image) {
         return "";
     }
@@ -139,11 +137,7 @@ function getProductImageUrl(image) {
     ----------------------------------------------------- */
 
     if (imagePath.startsWith("/images/")) {
-
-        return (
-            IMAGE_BASE_URL +
-            imagePath
-        );
+        return IMAGE_BASE_URL + imagePath;
     }
 
 
@@ -152,12 +146,7 @@ function getProductImageUrl(image) {
     ----------------------------------------------------- */
 
     if (imagePath.startsWith("images/")) {
-
-        return (
-            IMAGE_BASE_URL +
-            "/" +
-            imagePath
-        );
+        return IMAGE_BASE_URL + "/" + imagePath;
     }
 
 
@@ -170,11 +159,10 @@ function getProductImageUrl(image) {
 
        becomes:
 
-       http://localhost:5000/images/Earbuds.jpg
+       /images/Earbuds.jpg
     ----------------------------------------------------- */
 
     if (!imagePath.includes("/")) {
-
         return (
             IMAGE_BASE_URL +
             "/images/" +
@@ -191,11 +179,7 @@ function getProductImageUrl(image) {
         imagePath = "/" + imagePath;
     }
 
-
-    return (
-        IMAGE_BASE_URL +
-        imagePath
-    );
+    return IMAGE_BASE_URL + imagePath;
 }
 
 
@@ -204,9 +188,7 @@ function getProductImageUrl(image) {
 ========================================================= */
 
 function formatCurrency(amount) {
-
-    const number =
-        Number(amount) || 0;
+    const number = Number(amount) || 0;
 
     return `$${number.toFixed(2)}`;
 }
@@ -217,12 +199,9 @@ function formatCurrency(amount) {
 ========================================================= */
 
 function getTotalQuantity() {
-
     return Object.values(cart).reduce(
         (total, quantity) => {
-
-            const qty =
-                Number(quantity);
+            const qty = Number(quantity);
 
             if (
                 !Number.isFinite(qty) ||
@@ -231,10 +210,7 @@ function getTotalQuantity() {
                 return total;
             }
 
-            return (
-                total +
-                Math.floor(qty)
-            );
+            return total + Math.floor(qty);
         },
         0
     );
@@ -246,10 +222,8 @@ function getTotalQuantity() {
 ========================================================= */
 
 function calculateSubtotal() {
-
     return Object.entries(cart).reduce(
         (subtotal, [productId, quantity]) => {
-
             const product =
                 getProductById(productId);
 
@@ -257,8 +231,7 @@ function calculateSubtotal() {
                 return subtotal;
             }
 
-            const qty =
-                Number(quantity);
+            const qty = Number(quantity);
 
             if (
                 !Number.isFinite(qty) ||
@@ -269,10 +242,8 @@ function calculateSubtotal() {
 
             return (
                 subtotal +
-                (
-                    Number(product.price) *
-                    Math.floor(qty)
-                )
+                Number(product.price) *
+                Math.floor(qty)
             );
         },
         0
@@ -285,7 +256,6 @@ function calculateSubtotal() {
 ========================================================= */
 
 function calculateShipping(subtotal) {
-
     if (subtotal <= 0) {
         return 0;
     }
@@ -307,7 +277,6 @@ function calculateShipping(subtotal) {
 ========================================================= */
 
 function calculateDiscount() {
-
     return 0;
 }
 
@@ -317,14 +286,12 @@ function calculateDiscount() {
 ========================================================= */
 
 function updateHeaderCartCount() {
-
     const totalItems =
         getTotalQuantity();
 
     document
         .querySelectorAll(".cart-count")
         .forEach(element => {
-
             element.textContent =
                 totalItems;
         });
@@ -336,56 +303,44 @@ function updateHeaderCartCount() {
 ========================================================= */
 
 function updateWishlistCount() {
-
     let wishlist = [];
 
     try {
-
         const savedWishlist =
             localStorage.getItem(
                 WISHLIST_KEY
             );
 
         if (savedWishlist) {
-
             const parsed =
                 JSON.parse(savedWishlist);
 
             if (Array.isArray(parsed)) {
-
                 wishlist = parsed;
-
             } else if (
                 parsed &&
                 typeof parsed === "object"
             ) {
-
                 wishlist =
                     Object.keys(parsed)
                         .filter(
-                            key =>
-                                parsed[key]
+                            key => parsed[key]
                         );
             }
         }
-
     } catch (error) {
-
         console.error(
             "Unable to load wishlist:",
             error
         );
     }
 
-
     const count =
         wishlist.length;
-
 
     document
         .querySelectorAll(".wishlist-count")
         .forEach(element => {
-
             element.textContent =
                 count;
         });
@@ -397,7 +352,6 @@ function updateWishlistCount() {
 ========================================================= */
 
 function updateCartItemsCount() {
-
     if (!cartItemsCountElement) {
         return;
     }
@@ -419,22 +373,18 @@ function updateCartItemsCount() {
 ========================================================= */
 
 function createProductImage(product) {
-
     const imageUrl =
         getProductImageUrl(
             product.image
         );
 
-
     if (!imageUrl) {
-
         return `
             <div class="cart-image-placeholder">
                 <i class="fas fa-image"></i>
             </div>
         `;
     }
-
 
     return `
         <img
@@ -455,79 +405,52 @@ function createCartItem(
     product,
     quantity
 ) {
-
     const item =
         document.createElement("article");
 
     item.className =
         "cart-item";
 
-
     const itemTotal =
         Number(product.price) *
         quantity;
 
-
     item.innerHTML = `
-
         <!-- PRODUCT IMAGE -->
-
         <div class="cart-item-image">
-
             ${createProductImage(product)}
-
         </div>
 
 
         <!-- PRODUCT INFO -->
-
         <div class="cart-item-info">
-
             <span class="cart-item-category">
-
                 ${product.category || "Product"}
-
             </span>
 
-
             <h3 class="cart-item-title">
-
                 <a href="#">
-
                     ${product.name || "Product"}
-
                 </a>
-
             </h3>
 
-
             <p class="cart-item-price">
-
                 ${formatCurrency(product.price)}
-
                 each
-
             </p>
-
         </div>
 
 
         <!-- ACTIONS -->
-
         <div class="cart-item-actions">
 
-
             <!-- TOTAL -->
-
             <div class="cart-item-total">
-
                 ${formatCurrency(itemTotal)}
-
             </div>
 
 
             <!-- QUANTITY -->
-
             <div class="quantity-control">
 
                 <button
@@ -536,18 +459,12 @@ function createCartItem(
                     data-id="${product.id}"
                     aria-label="Decrease quantity"
                 >
-
                     <i class="fas fa-minus"></i>
-
                 </button>
 
-
                 <span class="quantity-value">
-
                     ${quantity}
-
                 </span>
-
 
                 <button
                     type="button"
@@ -555,26 +472,20 @@ function createCartItem(
                     data-id="${product.id}"
                     aria-label="Increase quantity"
                 >
-
                     <i class="fas fa-plus"></i>
-
                 </button>
 
             </div>
 
 
             <!-- REMOVE -->
-
             <button
                 type="button"
                 class="remove-item"
                 data-id="${product.id}"
             >
-
                 <i class="fas fa-trash"></i>
-
                 Remove
-
             </button>
 
         </div>
@@ -590,30 +501,23 @@ function createCartItem(
             ".cart-product-image"
         );
 
-
     if (image) {
-
         image.addEventListener(
             "error",
             function () {
-
                 console.warn(
                     "⚠️ Cart image not found:",
                     this.src
                 );
 
-
                 const placeholder =
                     document.createElement("div");
-
 
                 placeholder.className =
                     "cart-image-placeholder";
 
-
                 placeholder.innerHTML =
                     `<i class="fas fa-image"></i>`;
-
 
                 this.replaceWith(
                     placeholder
@@ -621,7 +525,6 @@ function createCartItem(
             }
         );
     }
-
 
     return item;
 }
@@ -632,11 +535,9 @@ function createCartItem(
 ========================================================= */
 
 function renderCart() {
-
     if (!cartItemsContainer) {
         return;
     }
-
 
     cartItemsContainer.innerHTML = "";
 
@@ -645,7 +546,6 @@ function renderCart() {
         Object.entries(cart)
             .filter(
                 ([productId, quantity]) => {
-
                     const product =
                         getProductById(
                             productId
@@ -653,7 +553,6 @@ function renderCart() {
 
                     const qty =
                         Number(quantity);
-
 
                     return (
                         product &&
@@ -671,17 +570,13 @@ function renderCart() {
     if (
         validCartItems.length === 0
     ) {
-
         if (emptyCartElement) {
-
             emptyCartElement.hidden =
                 false;
         }
 
-
         cartItemsContainer.hidden =
             true;
-
 
         updateSummary();
 
@@ -694,11 +589,9 @@ function renderCart() {
     ----------------------------------------------------- */
 
     if (emptyCartElement) {
-
         emptyCartElement.hidden =
             true;
     }
-
 
     cartItemsContainer.hidden =
         false;
@@ -706,18 +599,15 @@ function renderCart() {
 
     validCartItems.forEach(
         ([productId, quantity]) => {
-
             const product =
                 getProductById(
                     productId
                 );
 
-
             const qty =
                 Math.floor(
                     Number(quantity)
                 );
-
 
             const cartItem =
                 createCartItem(
@@ -725,13 +615,11 @@ function renderCart() {
                     qty
                 );
 
-
             cartItemsContainer.appendChild(
                 cartItem
             );
         }
     );
-
 
     updateSummary();
 }
@@ -742,20 +630,16 @@ function renderCart() {
 ========================================================= */
 
 function updateSummary() {
-
     const subtotal =
         calculateSubtotal();
-
 
     const shipping =
         calculateShipping(
             subtotal
         );
 
-
     const discount =
         calculateDiscount();
-
 
     const total =
         subtotal +
@@ -764,7 +648,6 @@ function updateSummary() {
 
 
     if (cartSubtotalElement) {
-
         cartSubtotalElement.textContent =
             formatCurrency(
                 subtotal
@@ -773,7 +656,6 @@ function updateSummary() {
 
 
     if (cartShippingElement) {
-
         cartShippingElement.textContent =
             shipping === 0
                 ? "FREE"
@@ -784,7 +666,6 @@ function updateSummary() {
 
 
     if (cartDiscountElement) {
-
         cartDiscountElement.textContent =
             `-${formatCurrency(
                 discount
@@ -793,7 +674,6 @@ function updateSummary() {
 
 
     if (cartTotalElement) {
-
         cartTotalElement.textContent =
             formatCurrency(
                 total
@@ -802,23 +682,19 @@ function updateSummary() {
 
 
     if (discountRow) {
-
         discountRow.hidden =
             discount <= 0;
     }
 
 
     if (checkoutButton) {
-
         checkoutButton.disabled =
             subtotal <= 0;
     }
 
 
     updateCartItemsCount();
-
     updateHeaderCartCount();
-
     updateWishlistCount();
 }
 
@@ -828,19 +704,14 @@ function updateSummary() {
 ========================================================= */
 
 function increaseQuantity(productId) {
-
     if (!cart[productId]) {
-
         cart[productId] = 1;
-
     } else {
-
         cart[productId] =
             Number(
                 cart[productId]
             ) + 1;
     }
-
 
     syncCart();
 }
@@ -851,30 +722,23 @@ function increaseQuantity(productId) {
 ========================================================= */
 
 function decreaseQuantity(productId) {
-
     if (!cart[productId]) {
         return;
     }
-
 
     const currentQuantity =
         Number(
             cart[productId]
         );
 
-
     if (
         currentQuantity <= 1
     ) {
-
         delete cart[productId];
-
     } else {
-
         cart[productId] =
             currentQuantity - 1;
     }
-
 
     syncCart();
 }
@@ -885,14 +749,11 @@ function decreaseQuantity(productId) {
 ========================================================= */
 
 function removeProduct(productId) {
-
     if (!cart[productId]) {
         return;
     }
 
-
     delete cart[productId];
-
 
     syncCart();
 }
@@ -903,30 +764,24 @@ function removeProduct(productId) {
 ========================================================= */
 
 function setupCartEvents() {
-
     if (!cartItemsContainer) {
         return;
     }
 
-
     cartItemsContainer.addEventListener(
         "click",
         event => {
-
             const button =
                 event.target.closest(
                     "button"
                 );
 
-
             if (!button) {
                 return;
             }
 
-
             const productId =
                 button.dataset.id;
-
 
             if (!productId) {
                 return;
@@ -940,7 +795,6 @@ function setupCartEvents() {
                     "increase-btn"
                 )
             ) {
-
                 increaseQuantity(
                     productId
                 );
@@ -956,7 +810,6 @@ function setupCartEvents() {
                     "decrease-btn"
                 )
             ) {
-
                 decreaseQuantity(
                     productId
                 );
@@ -972,7 +825,6 @@ function setupCartEvents() {
                     "remove-item"
                 )
             ) {
-
                 removeProduct(
                     productId
                 );
@@ -987,29 +839,23 @@ function setupCartEvents() {
 ========================================================= */
 
 function setupCheckout() {
-
     if (!checkoutButton) {
         return;
     }
 
-
     checkoutButton.addEventListener(
         "click",
         () => {
-
             const totalItems =
                 getTotalQuantity();
 
-
             if (totalItems <= 0) {
-
                 alert(
                     "Your cart is empty."
                 );
 
                 return;
             }
-
 
             window.location.href =
                 "../checkout/index.html";
@@ -1023,22 +869,18 @@ function setupCheckout() {
 ========================================================= */
 
 function initTheme() {
-
     const savedTheme =
         localStorage.getItem(
             THEME_KEY
         );
 
-
     if (
         savedTheme === "dark"
     ) {
-
         document.body.classList.add(
             "dark-mode"
         );
     }
-
 
     updateThemeIcon();
 
@@ -1051,17 +893,14 @@ function initTheme() {
     themeToggle.addEventListener(
         "click",
         () => {
-
             document.body.classList.toggle(
                 "dark-mode"
             );
-
 
             const isDark =
                 document.body.classList.contains(
                     "dark-mode"
                 );
-
 
             localStorage.setItem(
                 THEME_KEY,
@@ -1069,7 +908,6 @@ function initTheme() {
                     ? "dark"
                     : "light"
             );
-
 
             updateThemeIcon();
         }
@@ -1082,28 +920,23 @@ function initTheme() {
 ========================================================= */
 
 function updateThemeIcon() {
-
     if (!themeToggle) {
         return;
     }
-
 
     const icon =
         themeToggle.querySelector(
             "i"
         );
 
-
     if (!icon) {
         return;
     }
-
 
     const isDark =
         document.body.classList.contains(
             "dark-mode"
         );
-
 
     icon.className =
         isDark
@@ -1117,38 +950,30 @@ function updateThemeIcon() {
 ========================================================= */
 
 function loadCart() {
-
     try {
-
         const savedCart =
             localStorage.getItem(
                 CART_KEY
             );
 
-
         if (!savedCart) {
             return;
         }
-
 
         const parsedCart =
             JSON.parse(
                 savedCart
             );
 
-
         if (
             parsedCart &&
             typeof parsedCart === "object" &&
             !Array.isArray(parsedCart)
         ) {
-
             cart =
                 parsedCart;
         }
-
     } catch (error) {
-
         console.error(
             "Unable to load cart:",
             error
@@ -1162,16 +987,12 @@ function loadCart() {
 ========================================================= */
 
 function saveCart() {
-
     try {
-
         localStorage.setItem(
             CART_KEY,
             JSON.stringify(cart)
         );
-
     } catch (error) {
-
         console.error(
             "Unable to save cart:",
             error
@@ -1185,9 +1006,7 @@ function saveCart() {
 ========================================================= */
 
 function syncCart() {
-
     saveCart();
-
     renderCart();
 }
 
@@ -1197,7 +1016,6 @@ function syncCart() {
 ========================================================= */
 
 function setupWishlistStorageListener() {
-
     /*
        If wishlist changes in another page/tab,
        navbar count can update.
@@ -1211,7 +1029,6 @@ function setupWishlistStorageListener() {
                 event.key ===
                 WISHLIST_KEY
             ) {
-
                 updateWishlistCount();
             }
 
@@ -1220,11 +1037,10 @@ function setupWishlistStorageListener() {
                 event.key ===
                 CART_KEY
             ) {
-
                 loadCart();
-
                 renderCart();
             }
+
         }
     );
 }
@@ -1235,24 +1051,20 @@ function setupWishlistStorageListener() {
 ========================================================= */
 
 function logCartState() {
-
     console.log(
         "🛒 Current Cart:",
         cart
     );
-
 
     console.log(
         "📦 Total Items:",
         getTotalQuantity()
     );
 
-
     console.log(
         "💰 Subtotal:",
         calculateSubtotal()
     );
-
 
     console.log(
         "❤️ Wishlist Count:",
@@ -1266,37 +1078,29 @@ function logCartState() {
 ========================================================= */
 
 function getWishlistCount() {
-
     try {
-
         const savedWishlist =
             localStorage.getItem(
                 WISHLIST_KEY
             );
 
-
         if (!savedWishlist) {
             return 0;
         }
-
 
         const parsed =
             JSON.parse(
                 savedWishlist
             );
 
-
         if (Array.isArray(parsed)) {
-
             return parsed.length;
         }
-
 
         if (
             parsed &&
             typeof parsed === "object"
         ) {
-
             return Object.keys(parsed)
                 .filter(
                     key =>
@@ -1305,54 +1109,47 @@ function getWishlistCount() {
                 .length;
         }
 
-
         return 0;
 
     } catch (error) {
-
         return 0;
     }
 }
 
 
 /* =========================================================
-   INITIALIZE CART (UPDATED: waits for products.js)
+   INITIALIZE CART
+   WAITS FOR PRODUCTS.JS
 ========================================================= */
 
 async function initCart() {
-
     console.log(
         "🛒 ShopHub Cart Starting..."
     );
 
-    // NEW: wait for products.js to finish loading real
-    // products from the backend before reading/rendering
-    // the cart — otherwise getProductById() returns null
-    // for everything (since allProducts is still empty)
-    // and the cart looks empty even though items exist.
+
+    /*
+       Wait for products.js to finish loading
+       real products from the backend before
+       reading/rendering the cart.
+    */
+
     await window.productsReady;
 
 
     loadCart();
 
-
     initTheme();
-
 
     setupCartEvents();
 
-
     setupCheckout();
-
 
     setupWishlistStorageListener();
 
-
     renderCart();
 
-
     updateWishlistCount();
-
 
     logCartState();
 
@@ -1371,13 +1168,10 @@ if (
     document.readyState ===
     "loading"
 ) {
-
     document.addEventListener(
         "DOMContentLoaded",
         initCart
     );
-
 } else {
-
     initCart();
 }

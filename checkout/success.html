@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,17 +18,20 @@
 
     <title>ShopHub - Order Confirmed</title>
 
+
     <!-- Font Awesome -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     >
 
+
     <!-- Google Font -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet"
     >
+
 
     <style>
 
@@ -36,6 +40,7 @@
             padding: 0;
             box-sizing: border-box;
         }
+
 
         body {
             font-family: "Inter", sans-serif;
@@ -47,20 +52,24 @@
             flex-direction: column;
         }
 
+
         a {
             text-decoration: none;
             color: inherit;
         }
+
 
         .site-header {
             background: #ffffff;
             border-bottom: 1px solid #e5e7eb;
         }
 
+
         .container {
             width: min(1200px, 92%);
             margin: 0 auto;
         }
+
 
         .navbar {
             min-height: 76px;
@@ -70,6 +79,7 @@
             justify-content: space-between;
         }
 
+
         .logo {
             display: inline-flex;
             align-items: center;
@@ -78,6 +88,7 @@
             font-size: 22px;
             font-weight: 800;
         }
+
 
         .logo-icon {
             width: 40px;
@@ -92,15 +103,18 @@
             place-items: center;
         }
 
+
         .home-link {
             color: #4b5563;
             font-size: 14px;
             font-weight: 600;
         }
 
+
         .home-link:hover {
             color: #111827;
         }
+
 
         .success-page {
             flex: 1;
@@ -111,6 +125,7 @@
 
             padding: 70px 0;
         }
+
 
         .success-card {
             width: min(600px, 100%);
@@ -129,6 +144,7 @@
                 0 15px 40px rgba(15, 23, 42, 0.07);
         }
 
+
         .success-icon {
             width: 90px;
             height: 90px;
@@ -146,6 +162,7 @@
             font-size: 42px;
         }
 
+
         .success-label {
             display: inline-block;
 
@@ -159,6 +176,7 @@
             letter-spacing: 1.5px;
         }
 
+
         .success-card h1 {
             font-size: clamp(30px, 5vw, 44px);
 
@@ -166,6 +184,7 @@
 
             letter-spacing: -1px;
         }
+
 
         .success-card p {
             margin-top: 14px;
@@ -176,6 +195,7 @@
 
             line-height: 1.7;
         }
+
 
         .order-number {
             margin: 25px auto;
@@ -191,9 +211,11 @@
             font-size: 13px;
         }
 
+
         .order-number strong {
             color: #111827;
         }
+
 
         .actions {
             display: flex;
@@ -204,6 +226,7 @@
 
             margin-top: 25px;
         }
+
 
         .btn {
             min-height: 48px;
@@ -225,15 +248,18 @@
             transition: 0.2s ease;
         }
 
+
         .btn-primary {
             background: #111827;
             color: #ffffff;
         }
 
+
         .btn-primary:hover {
             background: #000000;
             transform: translateY(-2px);
         }
+
 
         .btn-secondary {
             border: 1px solid #d1d5db;
@@ -241,9 +267,11 @@
             background: #ffffff;
         }
 
+
         .btn-secondary:hover {
             background: #f3f4f6;
         }
+
 
         .site-footer {
             padding: 20px 0;
@@ -257,23 +285,28 @@
             font-size: 11px;
         }
 
+
         @media (max-width: 600px) {
 
             .navbar {
                 min-height: 65px;
             }
 
+
             .home-link {
                 font-size: 12px;
             }
+
 
             .success-page {
                 padding: 35px 0;
             }
 
+
             .success-card {
                 padding: 40px 20px;
             }
+
 
             .success-icon {
                 width: 75px;
@@ -282,9 +315,11 @@
                 font-size: 32px;
             }
 
+
             .actions {
                 flex-direction: column;
             }
+
 
             .btn {
                 width: 100%;
@@ -336,7 +371,6 @@
         </div>
 
     </header>
-
 
 
     <!-- SUCCESS -->
@@ -417,7 +451,6 @@
     </main>
 
 
-
     <!-- FOOTER -->
 
     <footer class="site-footer">
@@ -427,41 +460,62 @@
     </footer>
 
 
-
     <!-- SUCCESS PAGE JS -->
 
     <script>
 
         (function () {
 
-            const API_BASE_URL = "http://localhost:5000";
+            /* =========================================================
+               BACKEND CONFIGURATION
+
+               Local:
+               http://localhost:5000
+
+               Production:
+               https://shophub-bice.vercel.app
+            ========================================================= */
+
+            const API_BASE_URL =
+                window.location.hostname === "localhost" ||
+                window.location.hostname === "127.0.0.1"
+                    ? "http://localhost:5000"
+                    : "https://shophub-bice.vercel.app";
+
 
             const orderNumberElement =
-                document.getElementById("orderNumber");
+                document.getElementById(
+                    "orderNumber"
+                );
+
 
             const successMessage =
-                document.getElementById("successMessage");
+                document.getElementById(
+                    "successMessage"
+                );
+
 
             /* =========================================================
-               STEP 1: show whatever we already have immediately.
-
-               checkout.js saves the order it just created under the
-               "lastOrder" key (as JSON, with an `orderNumber` field) —
-               NOT a separate "lastOrderNumber" string, which is why
-               this used to never display anything.
+               STEP 1
+               READ LAST ORDER
             ========================================================= */
 
             let lastOrder = null;
 
+
             try {
 
                 const saved =
-                    localStorage.getItem("lastOrder");
+                    localStorage.getItem(
+                        "lastOrder"
+                    );
+
 
                 lastOrder =
                     saved
                         ? JSON.parse(saved)
                         : null;
+
 
             } catch (error) {
 
@@ -473,6 +527,7 @@
                 lastOrder = null;
             }
 
+
             if (
                 lastOrder &&
                 lastOrder.orderNumber &&
@@ -481,52 +536,81 @@
 
                 orderNumberElement.textContent =
                     lastOrder.orderNumber;
+
             }
 
+
             /* =========================================================
-               STEP 2: if this is a Stripe redirect (has ?session_id=),
-               confirm the payment with the backend. The webhook is the
-               reliable source of truth — this is just an immediate
-               on-page check so the customer sees a confirmed status
-               without waiting/refreshing.
+               STEP 2
+               VERIFY STRIPE PAYMENT
+
+               Stripe redirects here with:
+
+               ?session_id=...
+
+               Backend endpoint:
+
+               /api/payments/verify/:sessionId
             ========================================================= */
 
             async function verifyStripePayment() {
 
                 const params =
-                    new URLSearchParams(window.location.search);
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
 
                 const sessionId =
-                    params.get("session_id");
+                    params.get(
+                        "session_id"
+                    );
+
 
                 if (!sessionId) {
                     return;
                 }
 
+
                 const token =
-                    localStorage.getItem("authToken");
+                    localStorage.getItem(
+                        "authToken"
+                    );
+
 
                 if (!token) {
                     return;
                 }
 
+
                 try {
 
-                    const response = await fetch(
-                        `${API_BASE_URL}/api/payments/verify/${encodeURIComponent(sessionId)}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer ${token}`
+                    const response =
+                        await fetch(
+                            `${API_BASE_URL}/api/payments/verify/${encodeURIComponent(sessionId)}`,
+                            {
+                                method: "GET",
+
+                                headers: {
+                                    "Authorization":
+                                        `Bearer ${token}`
+                                }
                             }
-                        }
-                    );
+                        );
+
 
                     const data =
                         await response.json();
 
+
                     if (!data.success) {
                         return;
                     }
+
+
+                    /* -------------------------------------------------
+                       UPDATE ORDER NUMBER
+                    ------------------------------------------------- */
 
                     if (
                         data.orderNumber &&
@@ -535,11 +619,18 @@
 
                         orderNumberElement.textContent =
                             data.orderNumber;
+
                     }
+
 
                     if (!successMessage) {
                         return;
                     }
+
+
+                    /* -------------------------------------------------
+                       PAYMENT CONFIRMED
+                    ------------------------------------------------- */
 
                     if (data.paid) {
 
@@ -550,7 +641,9 @@
 
                         successMessage.textContent =
                             "We're still confirming your payment. This can take a moment — refresh this page shortly, or check your orders from your account.";
+
                     }
+
 
                 } catch (error) {
 
@@ -558,10 +651,31 @@
                         "Unable to verify Stripe payment:",
                         error
                     );
+
                 }
+
             }
 
+
+            /* =========================================================
+               RUN PAYMENT VERIFICATION
+            ========================================================= */
+
             verifyStripePayment();
+
+
+            /* =========================================================
+               DEBUG
+            ========================================================= */
+
+            console.log(
+                "✅ ShopHub Success Page Loaded"
+            );
+
+            console.log(
+                "🌐 Backend:",
+                API_BASE_URL
+            );
 
         })();
 
@@ -571,3 +685,4 @@
 </body>
 
 </html>
+

@@ -1,5 +1,4 @@
 
-
 /* =========================================================
    SHOPHUB LOGIN
 ========================================================= */
@@ -9,7 +8,12 @@
 // CONFIG
 // =========================================================
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL =
+    window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000"
+        : "https://shophub-bice.vercel.app";
+
 
 const LOGIN_API =
     `${API_BASE_URL}/api/auth/login`;
@@ -108,25 +112,32 @@ function setLoading(isLoading) {
         return;
     }
 
-
     loginBtn.disabled = isLoading;
 
 
     if (isLoading) {
 
-        loginBtnText.textContent =
-            "Logging in...";
+        if (loginBtnText) {
+            loginBtnText.textContent =
+                "Logging in...";
+        }
 
-        loginBtnIcon.className =
-            "fas fa-spinner fa-spin";
+        if (loginBtnIcon) {
+            loginBtnIcon.className =
+                "fas fa-spinner fa-spin";
+        }
 
     } else {
 
-        loginBtnText.textContent =
-            "Login";
+        if (loginBtnText) {
+            loginBtnText.textContent =
+                "Login";
+        }
 
-        loginBtnIcon.className =
-            "fas fa-arrow-right";
+        if (loginBtnIcon) {
+            loginBtnIcon.className =
+                "fas fa-arrow-right";
+        }
 
     }
 
@@ -142,6 +153,10 @@ if (passwordToggle) {
     passwordToggle.addEventListener(
         "click",
         () => {
+
+            if (!passwordInput) {
+                return;
+            }
 
             const isPassword =
                 passwordInput.type === "password";
@@ -202,8 +217,11 @@ function loadRememberedEmail() {
             emailInput.value =
                 savedEmail;
 
+
             if (rememberMe) {
+
                 rememberMe.checked = true;
+
             }
 
         }
@@ -386,6 +404,12 @@ if (loginForm) {
                 );
 
 
+                console.log(
+                    "🌐 Login API:",
+                    LOGIN_API
+                );
+
+
                 // -------------------------------------------------
                 // API REQUEST
                 // -------------------------------------------------
@@ -507,6 +531,7 @@ if (loginForm) {
                     "✅ Login Successful"
                 );
 
+
                 console.log(
                     "👤 User:",
                     data.user
@@ -584,3 +609,10 @@ loadRememberedEmail();
 console.log(
     "🚀 ShopHub Login Page Ready"
 );
+
+
+console.log(
+    "🌐 Backend:",
+    API_BASE_URL
+);
+
